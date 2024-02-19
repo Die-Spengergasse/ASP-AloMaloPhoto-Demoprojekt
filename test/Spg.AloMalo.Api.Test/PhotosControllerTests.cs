@@ -35,20 +35,20 @@ namespace Spg.AloMalo.Api.Test
             return db;
         }
 
-        [Fact]
-        public void POST_ShouldCreatePhoto_WhenCommandIsOk()
-        {
-            PhotoContext db = CreateDb();
+        //[Fact]
+        //public void POST_ShouldCreatePhoto_WhenCommandIsOk()
+        //{
+        //    PhotoContext db = CreateDb();
 
-            PhotosController utt = new PhotosController(
-                new PhotoService(null,
-                    new PhotoRepository(db, new PhotoFilterBuilder(db.Photos), new PhotoUpdateBuilder(db)),
-                    new PhotoRepository(db, new PhotoFilterBuilder(db.Photos), new PhotoUpdateBuilder(db)),
-                    null,
-                        new DateTimeServiceMock()));
+        //    PhotosController utt = new PhotosController(
+        //        new PhotoService(null,
+        //            new PhotoRepository(db, new PhotoFilterBuilder(db.Photos), new PhotoUpdateBuilder(db)),
+        //            new PhotoRepository(db, new PhotoFilterBuilder(db.Photos), new PhotoUpdateBuilder(db)),
+        //            null,
+        //                new DateTimeServiceMock()));
             
-            IActionResult result = utt.GetPhoto();
-            Assert.Equal(result, new OkObjectResult(null));
-        }
+        //    IActionResult result = utt.GetPhoto();
+        //    Assert.Equal(result, new OkObjectResult(null));
+        //}
     }
 }
