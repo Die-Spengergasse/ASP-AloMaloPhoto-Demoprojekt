@@ -1,0 +1,92 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{92ABC785-9790-4D4A-A1A2-30853F71417B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.Api", "src\Spg.AloMalo.Api\Spg.AloMalo.Api.csproj", "{36E79821-98B7-4E59-A6B6-F6AE9D259D5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.Application", "src\Spg.AloMalo.Application\Spg.AloMalo.Application.csproj", "{926259ED-7C15-44D8-A04D-74EEB3F052CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.Infrastructure", "src\Spg.AloMalo.Infrastructure\Spg.AloMalo.Infrastructure.csproj", "{F10E84F4-95E3-4EBD-ADF7-D93FE4C4177A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.DomainModel", "src\Spg.AloMalo.DomainModel\Spg.AloMalo.DomainModel.csproj", "{B554D2CE-B911-424D-A77F-192F9BA80CB5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.Repository", "src\Spg.AloMalo.Repository\Spg.AloMalo.Repository.csproj", "{E9589BF3-B243-4AB3-B2E6-64C2B1EB92AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FA1C941B-A2EA-4CEA-AC45-D662949C533B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.Api.Test", "test\Spg.AloMalo.Api.Test\Spg.AloMalo.Api.Test.csproj", "{9A68060E-BFE4-414B-A54B-A2D97DE18FDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.Application.Test", "test\Spg.AloMalo.Application.Test\Spg.AloMalo.Application.Test.csproj", "{C4AE755C-01AE-40C0-A633-4997A2A63A1A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.DomainModel.Test", "test\Spg.AloMalo.DomainModel.Test\Spg.AloMalo.DomainModel.Test.csproj", "{51F9BD49-66F8-4DAD-8821-C05E50815882}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.Repository.Test", "test\Spg.AloMalo.Repository.Test\Spg.AloMalo.Repository.Test.csproj", "{D6C48B19-EBCE-468E-A5DA-8653EC8C8C11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.MockMvc", "test\Spg.AloMalo.MockMvc\Spg.AloMalo.MockMvc.csproj", "{21C74D08-8BC3-4863-8DCF-05B193AFA158}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36E79821-98B7-4E59-A6B6-F6AE9D259D5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E79821-98B7-4E59-A6B6-F6AE9D259D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E79821-98B7-4E59-A6B6-F6AE9D259D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E79821-98B7-4E59-A6B6-F6AE9D259D5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{926259ED-7C15-44D8-A04D-74EEB3F052CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{926259ED-7C15-44D8-A04D-74EEB3F052CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{926259ED-7C15-44D8-A04D-74EEB3F052CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{926259ED-7C15-44D8-A04D-74EEB3F052CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F10E84F4-95E3-4EBD-ADF7-D93FE4C4177A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F10E84F4-95E3-4EBD-ADF7-D93FE4C4177A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F10E84F4-95E3-4EBD-ADF7-D93FE4C4177A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F10E84F4-95E3-4EBD-ADF7-D93FE4C4177A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B554D2CE-B911-424D-A77F-192F9BA80CB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B554D2CE-B911-424D-A77F-192F9BA80CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B554D2CE-B911-424D-A77F-192F9BA80CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B554D2CE-B911-424D-A77F-192F9BA80CB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9589BF3-B243-4AB3-B2E6-64C2B1EB92AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9589BF3-B243-4AB3-B2E6-64C2B1EB92AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9589BF3-B243-4AB3-B2E6-64C2B1EB92AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9589BF3-B243-4AB3-B2E6-64C2B1EB92AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A68060E-BFE4-414B-A54B-A2D97DE18FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A68060E-BFE4-414B-A54B-A2D97DE18FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A68060E-BFE4-414B-A54B-A2D97DE18FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A68060E-BFE4-414B-A54B-A2D97DE18FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4AE755C-01AE-40C0-A633-4997A2A63A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4AE755C-01AE-40C0-A633-4997A2A63A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4AE755C-01AE-40C0-A633-4997A2A63A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4AE755C-01AE-40C0-A633-4997A2A63A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51F9BD49-66F8-4DAD-8821-C05E50815882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51F9BD49-66F8-4DAD-8821-C05E50815882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51F9BD49-66F8-4DAD-8821-C05E50815882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51F9BD49-66F8-4DAD-8821-C05E50815882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6C48B19-EBCE-468E-A5DA-8653EC8C8C11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6C48B19-EBCE-468E-A5DA-8653EC8C8C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6C48B19-EBCE-468E-A5DA-8653EC8C8C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6C48B19-EBCE-468E-A5DA-8653EC8C8C11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21C74D08-8BC3-4863-8DCF-05B193AFA158}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21C74D08-8BC3-4863-8DCF-05B193AFA158}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21C74D08-8BC3-4863-8DCF-05B193AFA158}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21C74D08-8BC3-4863-8DCF-05B193AFA158}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{36E79821-98B7-4E59-A6B6-F6AE9D259D5F} = {92ABC785-9790-4D4A-A1A2-30853F71417B}
+		{926259ED-7C15-44D8-A04D-74EEB3F052CB} = {92ABC785-9790-4D4A-A1A2-30853F71417B}
+		{F10E84F4-95E3-4EBD-ADF7-D93FE4C4177A} = {92ABC785-9790-4D4A-A1A2-30853F71417B}
+		{B554D2CE-B911-424D-A77F-192F9BA80CB5} = {92ABC785-9790-4D4A-A1A2-30853F71417B}
+		{E9589BF3-B243-4AB3-B2E6-64C2B1EB92AC} = {92ABC785-9790-4D4A-A1A2-30853F71417B}
+		{9A68060E-BFE4-414B-A54B-A2D97DE18FDA} = {FA1C941B-A2EA-4CEA-AC45-D662949C533B}
+		{C4AE755C-01AE-40C0-A633-4997A2A63A1A} = {FA1C941B-A2EA-4CEA-AC45-D662949C533B}
+		{51F9BD49-66F8-4DAD-8821-C05E50815882} = {FA1C941B-A2EA-4CEA-AC45-D662949C533B}
+		{D6C48B19-EBCE-468E-A5DA-8653EC8C8C11} = {FA1C941B-A2EA-4CEA-AC45-D662949C533B}
+		{21C74D08-8BC3-4863-8DCF-05B193AFA158} = {FA1C941B-A2EA-4CEA-AC45-D662949C533B}
+	EndGlobalSection
+EndGlobal
