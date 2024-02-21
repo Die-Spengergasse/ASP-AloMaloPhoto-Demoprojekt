@@ -8,6 +8,6 @@ namespace Spg.AloMalo.DomainModel.Model
 {
     public class EntityBase
     {
-        public AlbumId Id { get; set; }
+        public AlbumId Id { get; set; } = default!;
     }
 }

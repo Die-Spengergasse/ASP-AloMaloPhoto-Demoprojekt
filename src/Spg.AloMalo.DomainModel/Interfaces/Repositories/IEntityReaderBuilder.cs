@@ -11,7 +11,6 @@ namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
         where TEntity : class
     {
         IQueryable<TEntity> EntityList { get; set; }
-
         IQueryable<TEntity> Build();
     }
 }

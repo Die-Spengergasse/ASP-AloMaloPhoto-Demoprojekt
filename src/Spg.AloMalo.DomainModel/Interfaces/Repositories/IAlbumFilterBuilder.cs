@@ -9,11 +9,11 @@ namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 {
     public interface IAlbumFilterBuilder : IEntityReaderBuilder<Album>
     {
-        IQueryable<Album> EntityList { get; set; }
+        new IQueryable<Album> EntityList { get; set; }
 
         IAlbumFilterBuilder ApplyIdFilter(AlbumId id);
         IAlbumFilterBuilder ApplyNameContainsFilter(string name);
 
-        IQueryable<Album> Build();
+        new IQueryable<Album> Build();
     }
 }

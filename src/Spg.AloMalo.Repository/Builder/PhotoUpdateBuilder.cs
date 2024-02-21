@@ -18,7 +18,7 @@ namespace Spg.AloMalo.Repository.Builder
     {
         private readonly PhotoContext _db;
 
-        public Photo Entity { get; set; }
+        public Photo Entity { get; set; } = default!;
 
         public PhotoUpdateBuilder(PhotoContext db)
         {

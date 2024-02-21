@@ -21,12 +21,15 @@ namespace Spg.AloMalo.Application.Services
         private readonly ILogger<PhotoService> _logger;
         private readonly IDateTimeService _dateTimeService;
 
-        public PhotoService(ILogger<PhotoService> logger, 
+        public PhotoService(
+            PhotoContext dbContext, 
+            ILogger<PhotoService> logger, 
             IReadOnlyPhotoRepository readOnlyPhotoRepository,
             IWritablePhotoRepository photoRepository,
             IPhotographerRepository photographerRepository,
             IDateTimeService dateTimeService)
         {
+            _dbContext = dbContext;
             _writablePhotoRepository = photoRepository;
             _readOnlyPhotoRepository = readOnlyPhotoRepository;
             _photographerRepository = photographerRepository;

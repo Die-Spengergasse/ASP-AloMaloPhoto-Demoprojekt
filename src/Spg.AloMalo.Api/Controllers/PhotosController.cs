@@ -91,7 +91,7 @@ namespace Spg.AloMalo.Api.Controllers
         [HttpPut()]
         public IActionResult UpdatePhoto()
         {
-            _photoService.Update(null);
+            _photoService.Update(null!);
             return Ok();
         }
     }

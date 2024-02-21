@@ -12,7 +12,7 @@ namespace Spg.AloMalo.Repository.Extensions
     {
         public static (PhotoContext, Photo) CreatePhoto(this PhotoContext context) // + alle Photo-Parameter
         {
-            Photo photo = null; // new Photo(..alle Photo-Parameter..)
+            Photo photo = null!; // new Photo(..alle Photo-Parameter..)
             return (context, photo);
         }
         public static (PhotoContext, Photo) UpdatePhoto(this PhotoContext context, Photo photo)
