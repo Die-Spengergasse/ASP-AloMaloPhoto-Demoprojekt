@@ -21,20 +21,6 @@ namespace Spg.AloMalo.Api.Test
 {
     public class PhotosControllerTests
     {
-        public PhotoContext CreateDb()
-        {
-            SqliteConnection connection = new SqliteConnection("Data Source=:memory:");
-            connection.Open();
-
-            DbContextOptions options = new DbContextOptionsBuilder()
-                .UseSqlite(connection)
-                .Options;
-
-            PhotoContext db = new PhotoContext(options);
-            db.Database.EnsureCreated();
-            return db;
-        }
-
         [Fact]
         public void OK_Test()
         {

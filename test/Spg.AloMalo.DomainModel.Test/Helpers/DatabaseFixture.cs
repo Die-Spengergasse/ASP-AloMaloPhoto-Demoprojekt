@@ -20,24 +20,24 @@ namespace Spg.AloMalo.DomainModel.Test.Helpers
         //    Db.Database.EnsureDeleted();
         //    Db.Database.EnsureCreated();
         //}
-        public DatabaseFixture()
-        {
-            SqliteConnection connection = new SqliteConnection("Data Source=:memory:");
-            connection.Open();
+        //public DatabaseFixture()
+        //{
+        //    SqliteConnection connection = new SqliteConnection("Data Source=:memory:");
+        //    connection.Open();
 
-            DbContextOptions options = new DbContextOptionsBuilder()
-                .UseSqlite(connection)
-                .Options;
+        //    DbContextOptions options = new DbContextOptionsBuilder()
+        //        .UseSqlite(connection)
+        //        .Options;
 
-            Db = new PhotoContext(options);
-            Db.Database.EnsureCreated();
-        }
+        //    Db = new PhotoContext(options);
+        //    Db.Database.EnsureCreated();
+        //}
 
         //public void Dispose()
         //{
         //    Db.Dispose();
         //}
 
-        public PhotoContext Db { get; private set; }
+        //public PhotoContext Db { get; private set; }
     }
 }
