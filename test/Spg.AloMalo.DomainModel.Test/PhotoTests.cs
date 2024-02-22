@@ -11,7 +11,7 @@ public class PhotoTests : IClassFixture<DatabaseFixture>
     [Fact]
     public void OK_Test()
     {
-        Assert.True(true);
+        Assert.True(false);
     }
 
 
