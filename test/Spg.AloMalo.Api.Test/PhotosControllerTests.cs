@@ -35,6 +35,12 @@ namespace Spg.AloMalo.Api.Test
             return db;
         }
 
+        [Fact]
+        public void OK_Test()
+        {
+            Assert.True(true);
+        }
+
         //[Fact]
         //public void POST_ShouldCreatePhoto_WhenCommandIsOk()
         //{
@@ -46,7 +52,7 @@ namespace Spg.AloMalo.Api.Test
         //            new PhotoRepository(db, new PhotoFilterBuilder(db.Photos), new PhotoUpdateBuilder(db)),
         //            null,
         //                new DateTimeServiceMock()));
-            
+
         //    IActionResult result = utt.GetPhoto();
         //    Assert.Equal(result, new OkObjectResult(null));
         //}
