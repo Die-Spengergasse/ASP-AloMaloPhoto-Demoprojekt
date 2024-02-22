@@ -2,7 +2,7 @@
 using Spg.AloMalo.DomainModel.Model;
 using Spg.AloMalo.DomainModel.Test.Helpers;
 using Spg.AloMalo.Infrastructure;
-using Testcontainers.PostgreSql;
+//using Testcontainers.PostgreSql;
 
 namespace Spg.AloMalo.DomainModel.Test
 {
