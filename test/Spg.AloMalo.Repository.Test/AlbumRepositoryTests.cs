@@ -1,12 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Moq;
-using Moq.EntityFrameworkCore;
-using Spg.AloMalo.DomainModel.Model;
-using Spg.AloMalo.Infrastructure;
-using Spg.AloMalo.Repository.Repositories;
-using Spg.AloMalo.Repository.Test.Helpers;
-
-namespace Spg.AloMalo.Repository.Test
+﻿namespace Spg.AloMalo.Repository.Test
 {
     public class AlbumRepositoryTests
     {
