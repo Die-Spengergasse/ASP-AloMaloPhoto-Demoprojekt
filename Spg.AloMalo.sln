@@ -25,8 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.DomainModel.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.Repository.Test", "test\Spg.AloMalo.Repository.Test\Spg.AloMalo.Repository.Test.csproj", "{D6C48B19-EBCE-468E-A5DA-8653EC8C8C11}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.MockMvc", "test\Spg.AloMalo.MockMvc\Spg.AloMalo.MockMvc.csproj", "{21C74D08-8BC3-4863-8DCF-05B193AFA158}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.AloMalo.MvcFrontEnd", "src\Spg.AloMalo.MvcFrontEnd\Spg.AloMalo.MvcFrontEnd.csproj", "{10EA2C32-ECE2-461A-A4DE-4EC0F127E673}"
 EndProject
 Global
