@@ -6,7 +6,7 @@ using Spg.AloMalo.Infrastructure;
 
 namespace Spg.AloMalo.DomainModel.Test;
 
-public class PhotoTests : IClassFixture<DatabaseFixture>
+public class PhotoTests // : IClassFixture<DatabaseFixture>
 {
     [Fact]
     public void OK_Test()
