@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\src\Spg.AloMalo.Api\Spg.AloMalo.Api.csproj" />
     <ProjectReference Include="..\..\src\Spg.AloMalo.DomainModel\Spg.AloMalo.DomainModel.csproj" />
     <ProjectReference Include="..\..\src\Spg.AloMalo.Infrastructure\Spg.AloMalo.Infrastructure.csproj" />
+    <ProjectReference Include="..\Spg.AloMalo.MockMvc\Spg.AloMalo.MockMvc.csproj" />
   </ItemGroup>
 
 </Project>
