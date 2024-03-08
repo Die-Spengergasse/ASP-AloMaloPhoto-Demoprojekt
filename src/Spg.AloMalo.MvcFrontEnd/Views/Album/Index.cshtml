@@ -1,5 +1,5 @@
-﻿@using Spg.AloMalo.DomainModel.Dtos
-@model IQueryable<AlbumDto>;
+﻿@using Spg.AloMalo.DomainModel.Model
+@model IQueryable<Album>;
 
 <h1>Liste alle Fotoalben</h1>
 
@@ -14,15 +14,17 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (AlbumDto item in Model)
+    @foreach (Album item in Model)
     {
         <tr>
             <td>@item.Name</td>
             <td>@item.Description</td>
             <td>@item.CreationTimeStamp</td>
-            <td><a>Update</a></td>
+            <td><a asp-action="Update" asp-controller="Album" asp-route-name="@item.Name">Update</a></td>
             <td><a>Delete</a></td>
         </tr>
     }
     </tbody>
 </table>
+
+<a asp-action="Create" asp-controller="Album">Create</a>

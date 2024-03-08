@@ -1,1 +1,10 @@
-﻿<h1>Create (Baustelle)</h1>
+﻿@using Spg.AloMalo.DomainModel.Commands
+@model CreateAlbumCommand;
+
+<h1>Create (Baustelle)</h1>
+
+<form method="post">
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+    <button type="submit">Senden</button>
+</form>

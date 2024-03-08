@@ -2,6 +2,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Spg.AloMalo.DomainModel.Model;
 using Spg.AloMalo.DomainModel.Test.Helpers;
+using Spg.AloMalo.DomainModel.Validators;
 using Spg.AloMalo.Infrastructure;
 
 namespace Spg.AloMalo.DomainModel.Test;
@@ -23,17 +24,25 @@ public class AlbumTests // : IClassFixture<DatabaseFixture>
             // Arrange
             Photographer newPhotographer = DatabaseUtilities.GetSeedingPhotographers()[0];
             Album newAlbum1 = new Album(
-                "Test Album 01", "Beschreibung...",
+                "Test Album Homer", "Simpson Beschreibung...",
                 true,
                 newPhotographer,
                 new TimeStampProvider()
-            ); ;
+            )
+            .Validate();
             Album newAlbum2 = new Album(
-                "Test Album 02", "Beschreibung...",
+                "Test Simpson Album 02", "Beschreibung...",
                 true,
                 newPhotographer,
                 new TimeStampProvider()
-            );
+            )
+            .Validate();
+
+            ModelValidator<Album> validator = new Validators.ModelValidator<Album>();
+            bool isValid = validator.Validate(newAlbum1);
+
+
+            newAlbum1.Name = "vieeeeeeeel zu langer name";
 
             // Act
             db.Albums.Add(newAlbum1);

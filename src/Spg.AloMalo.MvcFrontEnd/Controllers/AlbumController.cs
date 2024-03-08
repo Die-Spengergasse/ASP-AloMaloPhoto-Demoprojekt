@@ -1,15 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Spg.AloMalo.Application.Services;
 using Spg.AloMalo.DomainModel.Commands;
+using Spg.AloMalo.DomainModel.Dtos;
+using Spg.AloMalo.DomainModel.Error;
+using Spg.AloMalo.DomainModel.Interfaces;
+using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.MvcFrontEnd.Controllers
 {
     public class AlbumController : Controller
     {
+        private readonly IAlbumService _albumService;
+
+        public AlbumController(IAlbumService albumService)
+        {
+            _albumService = albumService;
+        }
+
         [HttpGet()]
         public IActionResult Index()
         {
             // TODO: Liste laden
-            return View();
+            ErrorCheck<IQueryable<Album>> data = _albumService.GetAllOk();
+            return View(data.Value);
         }
 
         [HttpGet()]
@@ -21,7 +34,11 @@ namespace Spg.AloMalo.MvcFrontEnd.Controllers
         [HttpPost()]
         public IActionResult Create(CreateAlbumCommand model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
         }
     }
 }

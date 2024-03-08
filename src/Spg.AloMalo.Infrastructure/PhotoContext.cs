@@ -54,6 +54,8 @@ namespace Spg.AloMalo.Infrastructure
             builder.Entity<Person>().OwnsOne(e => e.Username);
             builder.Entity<Photo>().OwnsOne(e => e.Location);
 
+            builder.Entity<Album>().Ignore(e => e.IsValid);
+
             // Nested Value Objects
             // https://stackoverflow.com/questions/53652135/entity-framework-core-2-1-owned-types-and-nested-value-objects
             builder.Entity<Photographer>(p =>

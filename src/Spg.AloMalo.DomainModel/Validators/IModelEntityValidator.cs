@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Validators
 {
-    public class StringValidationAttribute : Attribute
+    public interface IModelEntityValidator
     {
-        public StringValidationAttribute()
-        {
-            
-        }
+        bool IsValid(object? value);
     }
 }

@@ -1,18 +1,15 @@
 ﻿using Spg.AloMalo.DomainModel.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
+using Spg.AloMalo.DomainModel.Validators;
 
 namespace Spg.AloMalo.DomainModel.Model
 {
-    public class Album
+    public class Album : EntityBase<Album>, IValidateableEntity<Album>
     {
         public AlbumId Id { get; set; } = default!;
+        
+        [NoSpecialFirstName("Homer")]
         public string Name { get; set; } = string.Empty;
+
         public string Description { get; set; } = string.Empty;
         public DateTime CreationTimeStamp  { get; private set; }
         public bool Private { get; set; }
@@ -25,7 +22,7 @@ namespace Spg.AloMalo.DomainModel.Model
         protected Album()
         { }
         public Album(
-            string name, 
+            [NoSpecialFirstNameAttribute("Homer")] string name, 
             string description, 
             bool @private,
             Photographer owner,
@@ -62,6 +59,21 @@ namespace Spg.AloMalo.DomainModel.Model
                 _albumPhotos.Add(new AlbumPhoto(this, newPhoto, 1));
             }
             return this;
+        }
+
+        public Album Validate()
+        {
+            Validate(new() 
+            {
+                CheckName,
+                () => (Description.ToString().ToLower().Contains("simpson".ToLower()), "Description enthält Simpson")
+            });
+            return this;
+        }
+
+        private (bool, string) CheckName()
+        {
+            return (Name.ToString().ToLower().Contains("HOMER".ToLower()), "Name enthält Homer");
         }
     }
 }

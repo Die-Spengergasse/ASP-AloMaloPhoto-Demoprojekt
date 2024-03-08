@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Spg.AloMalo.Application.Services;
 using Spg.AloMalo.Application.Services.Helpers;
 using Spg.AloMalo.DomainModel.Interfaces;
@@ -45,6 +44,13 @@ builder.Services.AddScoped<IPhotoService>(s => new PhotoServiceWrapper(s.GetRequ
 builder.Services.AddScoped<AlbumService>();
 builder.Services.AddScoped<IAlbumService>(s => new AlbumServiceWrapper(s.GetRequiredService<AlbumService>()));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("myPolicy", policy => {
+        policy.WithOrigins("ACCESS-CONTROL-ALLOW-ORIGIN", "CONTENT-TYPE", "other-info");
+    });
+});
+
 var app = builder.Build();
 
 
@@ -67,6 +73,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("allowSpecificOrigins");
 
 app.UseHttpsRedirection();
 
