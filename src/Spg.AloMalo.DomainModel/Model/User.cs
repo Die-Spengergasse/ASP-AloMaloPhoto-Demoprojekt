@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Spg.AloMalo.DomainModel.Model.RichTypes;
+using Spg.AloMalo.DomainModel.Validators.RichTypes;
 
 namespace Spg.AloMalo.DomainModel.Model
 {
     public abstract class User
     {
-        //public int Id { get; set; }
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty!;
+        public string LastName { get; set; } = string.Empty!;
 
         #region -- Login ----------------------------------------------
         public EMail Username { get; private set; } = default!;
@@ -21,9 +17,12 @@ namespace Spg.AloMalo.DomainModel.Model
         { }
         protected User(string firstName, string lastName, EMail username)
         {
-            FirstName = firstName;
-            LastName = lastName;
-            Username = username;
+            //Validator.Clear();
+            //FirstName = Validator.Validate<FirstName, string>(firstName);
+            //LastName = Validator.Validate<LastName, string>(lastName);
+            //Username = username;
+
+            //Validator.ThrowOnErrors();
         }
     }
 }

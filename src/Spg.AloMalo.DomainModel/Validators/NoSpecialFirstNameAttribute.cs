@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Validators
 {
-    public class NoSpecialFirstNameAttribute : Attribute, IModelEntityValidator
+    public class NoSpecialFirstNameAttribute : ValidationAttribute, IModelEntityValidator
     {
         public string ForbiddenName{ get; set; }
 
@@ -17,7 +17,7 @@ namespace Spg.AloMalo.DomainModel.Validators
             ForbiddenName = forbiddenName;
         }
 
-        public bool IsValid(object? value)
+        public override bool IsValid(object? value)
         {
             if (value?.ToString()?.ToLower()
                 .Contains(ForbiddenName?.ToLower() ?? string.Empty) 

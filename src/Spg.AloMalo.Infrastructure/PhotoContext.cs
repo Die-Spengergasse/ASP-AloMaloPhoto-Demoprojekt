@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spg.AloMalo.DomainModel.Model;
+using Spg.AloMalo.DomainModel.Model.RichTypes;
 using Spg.AloMalo.Infrastructure.IdConverters;
+using Spg.AloMalo.Infrastructure.RichTypesConverters;
 using System;
 using System.Reflection.Emit;
 
@@ -114,6 +116,17 @@ namespace Spg.AloMalo.Infrastructure
                 .HasColumnName("Id")
                 .ValueGeneratedOnAdd()
                 .IsRequired();
+
+
+            //builder.Entity<Person>()
+            //    .Property(p => p.FirstName)
+            //    .HasConversion(new PersonFirstNameConverter())
+            //    .HasColumnName(nameof(FirstName));
+
+            //builder.Entity<Person>()
+            //    .Property(p => p.LastName)
+            //    .HasConversion(new PersonLastNameConverter())
+            //    .HasColumnName(nameof(LastName));
         }
     }
 }

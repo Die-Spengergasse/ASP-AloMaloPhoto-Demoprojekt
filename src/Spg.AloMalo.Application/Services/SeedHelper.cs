@@ -1,5 +1,6 @@
 ﻿using Spg.AloMalo.DomainModel;
 using Spg.AloMalo.DomainModel.Model;
+using Spg.AloMalo.DomainModel.Model.RichTypes;
 using Spg.AloMalo.Infrastructure;
 using System;
 using System.Collections.Generic;

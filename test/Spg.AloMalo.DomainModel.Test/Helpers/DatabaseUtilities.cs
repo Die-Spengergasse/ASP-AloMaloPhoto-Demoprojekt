@@ -1,6 +1,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Spg.AloMalo.DomainModel.Model;
+using Spg.AloMalo.DomainModel.Model.RichTypes;
 using Spg.AloMalo.Infrastructure;
 
 namespace Spg.AloMalo.DomainModel.Test.Helpers 

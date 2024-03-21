@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
@@ -21,15 +22,11 @@ namespace Spg.AloMalo.DomainModel.Validators
                 IEnumerable<Attribute> attr = property.GetCustomAttributes();
                 foreach (Attribute attribute in attr) 
                 {
-                    if (attribute is null)
+                    if (attribute?.GetType()?.BaseType?.Name != nameof(ValidationAttribute))
                     {
                         continue;
                     }
-                    if (attribute.GetType().GetInterface(nameof(IModelEntityValidator)) is null)
-                    {
-                        continue;
-                    }
-                    NoSpecialFirstNameAttribute modelEntityValidator = attribute as NoSpecialFirstNameAttribute;
+                    ValidationAttribute modelEntityValidator = (ValidationAttribute)attribute;
                     if (modelEntityValidator is null)
                     {
                         continue;

@@ -1,5 +1,6 @@
 ﻿using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Validators;
+using System.ComponentModel.DataAnnotations;
 
 namespace Spg.AloMalo.DomainModel.Model
 {
@@ -8,6 +9,7 @@ namespace Spg.AloMalo.DomainModel.Model
         public AlbumId Id { get; set; } = default!;
         
         [NoSpecialFirstName("Homer")]
+        [StringLength(maximumLength: 5)]
         public string Name { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;

@@ -67,7 +67,8 @@ namespace Spg.AloMalo.Api.Controllers
 
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CreatePhoto(CreatePhotoCommand command)
         {
             // Try-Catch-Blöcke im Controller sind richtig HÄSSLICH!

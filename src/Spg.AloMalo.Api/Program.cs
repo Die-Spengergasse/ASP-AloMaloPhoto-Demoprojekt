@@ -54,20 +54,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
-
-// ** DB Seeding Hard Coded (Bad Code) **
-//DbContextOptionsBuilder dbContextOptionsBuilder = new DbContextOptionsBuilder();
-//dbContextOptionsBuilder.UseSqlite("Data Source = C:\\HTL\\Unterricht\\SJ2324\\4BHIF\\POS\\sj23-24-4bhif-pos-schrutek\\Spg.AloMalo\\src\\Spg.AloMalo.Api\\Photo.db");
-//PhotoContext _db = new PhotoContext(dbContextOptionsBuilder.Options);
-//_db = new PhotoContext(dbContextOptionsBuilder.Options);
-//_db.Database.EnsureDeleted();
-//_db.Database.EnsureCreated();
-//SeedHelper.Seed(_db);
-// ** DB Seeding Hard Coded **
-
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

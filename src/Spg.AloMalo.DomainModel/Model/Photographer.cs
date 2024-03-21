@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Spg.AloMalo.DomainModel.Interfaces.Findables;
+using Spg.AloMalo.DomainModel.Model.RichTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
