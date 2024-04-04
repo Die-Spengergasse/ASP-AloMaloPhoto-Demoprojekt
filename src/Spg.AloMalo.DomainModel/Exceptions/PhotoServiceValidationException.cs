@@ -27,5 +27,9 @@ namespace Spg.AloMalo.DomainModel.Exceptions
         {
             return new PhotoServiceCreateException("CreationDate must be in future!");
         }
+        public static PhotoServiceCreateException FromPhotographerRequired()
+        {
+            return new PhotoServiceCreateException("Photographer is requred!");
+        }
     }
 }

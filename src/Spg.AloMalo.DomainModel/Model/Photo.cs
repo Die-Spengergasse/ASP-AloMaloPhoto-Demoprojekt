@@ -14,6 +14,7 @@ namespace Spg.AloMalo.DomainModel.Model
     {
         public PhotoId Id { get; private set; } = default!; // PK, auto increment
         [StringLength(5, ErrorMessage = "zu lang")]
+        public Guid Guid { get; private set; }
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public DateTime CreationTimeStamp { get; private set; }
@@ -21,7 +22,19 @@ namespace Spg.AloMalo.DomainModel.Model
         public Location Location { get; set; } = default!;
         public int Width { get; set; }
         public int Height { get; set; }
-        public Orientations Orientation { get; set; }
+        public Orientations Orientation 
+        {
+            get
+            {
+                // Berechnet das Photoformat (Hoch, Breit)
+                Orientations orientation = Orientations.Portrait;
+                if (Width >= Height)
+                {
+                    orientation = Orientations.Landscape;
+                }
+                return orientation;
+            }
+        }
         public bool AiGenerated { get; private set; }
 
         [JsonIgnore()]
@@ -34,6 +47,7 @@ namespace Spg.AloMalo.DomainModel.Model
         private Photo()
         { }
         public Photo(
+            Guid guid,
             [StringLength(5, ErrorMessage = "zu lang")] string name,
             string description,
             DateTime creationTimeStamp,
@@ -41,10 +55,10 @@ namespace Spg.AloMalo.DomainModel.Model
             Location location,
             int width,
             int height,
-            Orientations orientation,
             bool aiGenerated,
             Photographer photographer)
         {
+            Guid = guid;
             Name = name;
             Description = description;
             CreationTimeStamp = creationTimeStamp;
@@ -52,7 +66,6 @@ namespace Spg.AloMalo.DomainModel.Model
             Location = location;
             Width = width;
             Height = height;
-            Orientation = orientation;
             AiGenerated = aiGenerated;
             PhotographerNavigation = photographer;
         }

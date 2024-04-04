@@ -121,12 +121,7 @@ namespace Spg.AloMalo.Infrastructure
             //builder.Entity<Person>()
             //    .Property(p => p.FirstName)
             //    .HasConversion(new PersonFirstNameConverter())
-            //    .HasColumnName(nameof(FirstName));
-
-            //builder.Entity<Person>()
-            //    .Property(p => p.LastName)
-            //    .HasConversion(new PersonLastNameConverter())
-            //    .HasColumnName(nameof(LastName));
+            //    .HasColumnName("FirstName");
         }
     }
 }

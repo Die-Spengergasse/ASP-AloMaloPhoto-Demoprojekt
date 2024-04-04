@@ -6,6 +6,8 @@ namespace Spg.AloMalo.DomainModel.Model
     public abstract class User
     {
         public string FirstName { get; set; } = string.Empty!;
+        //public FirstName FirstName { get; set; } = default!;
+
         public string LastName { get; set; } = string.Empty!;
 
         #region -- Login ----------------------------------------------
@@ -19,10 +21,13 @@ namespace Spg.AloMalo.DomainModel.Model
         {
             //Validator.Clear();
             //FirstName = Validator.Validate<FirstName, string>(firstName);
-            //LastName = Validator.Validate<LastName, string>(lastName);
             //Username = username;
 
             //Validator.ThrowOnErrors();
+
+            FirstName = firstName;
+            LastName = lastName;
+            Username = username;
         }
     }
 }

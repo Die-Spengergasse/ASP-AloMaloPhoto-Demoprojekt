@@ -59,6 +59,8 @@ namespace Spg.AloMalo.Application.Services
         public Photo Create(CreatePhotoCommand command)
         {
             _logger.LogDebug("Initalisation");
+            Photographer photographer = _photographerRepository.GetByGuid<Photographer>(command.PhotographerId)
+                ?? throw PhotoServiceValidationException.FromPhotographerRequired();
 
             _logger.LogDebug("Validation");
             if (string.IsNullOrEmpty(command.Name))
@@ -66,24 +68,61 @@ namespace Spg.AloMalo.Application.Services
                 throw PhotoServiceValidationException.FromLastNameRequired();
             }
 
-            // Erstellungsdatum darf nicht in der Vergangenheit liegen
-            if (command.CreationTimeStamp < _dateTimeService.Now)
-            {
-                throw PhotoServiceValidationException.FromLastNameRequired();
-            }
-
             _logger.LogDebug("Action");
 
+            DateTime creationTimeStamp = DateTime.Now;
+            Guid guid = Guid.NewGuid();
+
+            //// Berechnet das Photoformat (Hoch, Breit)
+            //// Alternative: Im Model ausrechnen
+            //Orientations orientation = Orientations.Portrait;
+            //if (command.Width >= command.Height)
+            //{
+            //    orientation = Orientations.Landscape;
+            //}
+
+            // Mappt ImageType
+            ImageTypes imageType;
+            switch (command.ImageType)
+            {
+                case ImageTypesDto.Nef:
+                    imageType = ImageTypes.Nef;
+                    break;
+                case ImageTypesDto.Png:
+                    imageType = ImageTypes.Png;
+                    break;
+                case ImageTypesDto.Jpg:
+                    imageType = ImageTypes.Jpg;
+                    break;
+                default:
+                    imageType = ImageTypes.Unknown;
+                    break;
+            }
+
+            // Erstellt neue Entity
+            Photo newPhoto = new Photo(
+                guid, 
+                command.Name, 
+                command.Description, 
+                creationTimeStamp, // hmmmm, wird vom Service gesetzt!
+                imageType, 
+                new Location(command.Location.Longitude, command.Location.Latitude), 
+                command.Width, 
+                command.Height,
+                command.AiGenerated, 
+                photographer);
+
+            // Save
             try
             {
                 _logger.LogDebug("Save");
-
+                _writablePhotoRepository.Create(newPhoto);
                 _logger.LogInformation("Successfully saved");
             }
-            catch (Exception)
+            catch (PhotoRepositoryException ex)
             {
                 _logger.LogError("save failed");
-                throw PhotoServiceCreateException.FromSave();
+                throw PhotoServiceCreateException.FromSave(ex);
             }
 
             return null!;
@@ -106,7 +145,6 @@ namespace Spg.AloMalo.Application.Services
             // mit Repository-Pattern
             _writablePhotoRepository.UpdateBuilder
                 .WithEntity(foundEntity)
-                .WithOrientation(Orientations.Portrait)
                 .Save();
 
             // ohne Repository-Pattern
@@ -114,7 +152,6 @@ namespace Spg.AloMalo.Application.Services
                 .UpdatePhoto(foundEntity)
                 .WithName("New Name")
                 .WithDescription("New Description of this Photo (updated)!")
-                .WithOrienatation(Orientations.Portrait)
                 .Save();
         }
     }

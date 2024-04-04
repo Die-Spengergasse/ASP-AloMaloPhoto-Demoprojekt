@@ -31,13 +31,13 @@ public class PhotoTests // : IClassFixture<DatabaseFixture>
             // Arrange
             Photographer newPhotographer = DatabaseUtilities.GetSeedingPhotographers()[0];
             Photo newPhoto = new Photo(
+                new Guid("11111111-1111-1111-1111-111111111111"),
                 "Test Photo 01",
                 "Beschreibung Test Photo 01...",
                 DateTime.Now,
                 ImageTypes.Png,
                 new Location(12, 17),
                 400, 800,
-                Orientations.Landscape,
                 false,
                 newPhotographer
             ).AddAlbums(new Album(
@@ -68,13 +68,13 @@ public class PhotoTests // : IClassFixture<DatabaseFixture>
             // Arrange
             Photographer newPhotographer = DatabaseUtilities.GetSeedingPhotographers()[0];
             Photo newPhoto = new Photo(
+                new Guid("11111111-1111-1111-1111-111111111111"),
                 "Test Photo 01",
                 "Beschreibung Test Photo 01...",
                 DateTime.Now,
                 ImageTypes.Png,
                 new Location(12, 17),
                 400, 800,
-                Orientations.Landscape,
                 false,
                 newPhotographer
             ).AddAlbums(

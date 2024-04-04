@@ -36,14 +36,6 @@ namespace Spg.AloMalo.Repository.Extensions
 
             return input;
         }
-        public static (PhotoContext, Photo) WithOrienatation(this (PhotoContext, Photo) input, Orientations orientation)
-        {
-            // Vereinfacht:
-            (_, Photo photo) = input;
-            photo.Orientation = orientation;
-
-            return input;
-        }
 
         public static PhotoContext Save(this (PhotoContext, Photo) input)
         {

@@ -28,6 +28,7 @@ namespace Spg.AloMalo.DomainModel.Test.Helpers
             return new List<Photographer>()
             {
                 new Photographer(
+                    new Guid("99999999-9999-9999-9999-999999999999"),
                     "Martin",
                     "Schrutek",
                     new Address("Photo Street 1", "1234", "Photoville", "Photanien"){ State= new() { Name = "NÖ" } }, //, new State("NÖ")
@@ -37,6 +38,7 @@ namespace Spg.AloMalo.DomainModel.Test.Helpers
                     new EMail("schrutek@spengergasse.at")
                 ),
                 new Photographer(
+                    new Guid("99999999-9999-9999-9999-999999999999"),
                     "Klaus",
                     "Unger",
                     new Address("Photo Street 2", "7985", "Photoville 2", "Photanien 2"){ State= new() { Name = "WIEN" } }, //, new State("NÖ")
@@ -62,14 +64,14 @@ namespace Spg.AloMalo.DomainModel.Test.Helpers
         {
             return new List<Photo>()
             {
-                new Photo("Baum", "addaas fghjkl adefg", DateTime.Now, ImageTypes.Png, new Location(123, 456), 200, 100, Orientations.Landscape, false, photographers.ElementAt(0)),
-                new Photo("Busch", "qweewqeqw dfrgv dsd", DateTime.Now, ImageTypes.Png, new Location(123, 456), 300, 100, Orientations.Landscape, false, photographers.ElementAt(0)),
-                new Photo("Berg", "fgdgfdgfd tghzjkjhgf", DateTime.Now, ImageTypes.Png, new Location(123, 456), 200, 800, Orientations.Portrait, false, photographers.ElementAt(1)),
-                new Photo("Bach", "fhjdscsdfghjnhbgvfd", DateTime.Now, ImageTypes.Png, new Location(123, 456), 400, 500, Orientations.Portrait, false, photographers.ElementAt(1)),
-                new Photo("Wald", "ertzhjkl,mnbvcd sedgtf", DateTime.Now, ImageTypes.Png, new Location(123, 456), 800, 400, Orientations.Landscape, false, photographers.ElementAt(1)),
-                new Photo("Frau", "dfvbnjijuhfds dsfdgh", DateTime.Now, ImageTypes.Png, new Location(123, 456), 800, 400, Orientations.Landscape, false, photographers.ElementAt(0)),
-                new Photo("Mann", "wsedrtzujikkjhgvfc ed", DateTime.Now, ImageTypes.Png, new Location(123, 456), 1000, 600, Orientations.Landscape, false, photographers.ElementAt(0)),
-                new Photo("Wiese", "oiujztrdefvgh hjuhki", DateTime.Now, ImageTypes.Png, new Location(123, 456), 200, 1000, Orientations.Portrait, false, photographers.ElementAt(1))
+                new Photo(new Guid("11111111-1111-1111-1111-111111111111"), "Baum", "addaas fghjkl adefg", DateTime.Now, ImageTypes.Png, new Location(123, 456), 200, 100, false, photographers.ElementAt(0)),
+                new Photo(new Guid("22222222-2222-2222-2222-222222222222"), "Busch", "qweewqeqw dfrgv dsd", DateTime.Now, ImageTypes.Png, new Location(123, 456), 300, 100, false, photographers.ElementAt(0)),
+                new Photo(new Guid("33333333-3333-3333-3333-333333333333"), "Berg", "fgdgfdgfd tghzjkjhgf", DateTime.Now, ImageTypes.Png, new Location(123, 456), 200, 800, false, photographers.ElementAt(1)),
+                new Photo(new Guid("44444444-4444-4444-4444-444444444444"), "Bach", "fhjdscsdfghjnhbgvfd", DateTime.Now, ImageTypes.Png, new Location(123, 456), 400, 500, false, photographers.ElementAt(1)),
+                new Photo(new Guid("55555555-5555-5555-5555-555555555555"), "Wald", "ertzhjkl,mnbvcd sedgtf", DateTime.Now, ImageTypes.Png, new Location(123, 456), 800, 400, false, photographers.ElementAt(1)),
+                new Photo(new Guid("66666666-6666-6666-6666-666666666666"), "Frau", "dfvbnjijuhfds dsfdgh", DateTime.Now, ImageTypes.Png, new Location(123, 456), 800, 400, false, photographers.ElementAt(0)),
+                new Photo(new Guid("77777777-7777-7777-7777-777777777777"), "Mann", "wsedrtzujikkjhgvfc ed", DateTime.Now, ImageTypes.Png, new Location(123, 456), 1000, 600, false, photographers.ElementAt(0)),
+                new Photo(new Guid("88888888-8888-8888-8888-888888888888"), "Wiese", "oiujztrdefvgh hjuhki", DateTime.Now, ImageTypes.Png, new Location(123, 456), 200, 1000, false, photographers.ElementAt(1))
             };
         }
 

@@ -27,6 +27,7 @@ namespace Spg.AloMalo.DomainModel.Test
         private void SeedDb(PhotoContext db)
         {
             Photographer newPhotographer = new Photographer(
+                new Guid("99999999-9999-9999-9999-999999999999"),
                 "Martin",
                 "Schrutek",
                 new Address("Photo Street 1", "1234", "Photoville", "Photanien") { State = new() { Name = "NÖ" } }, //, new State("NÖ")
@@ -42,57 +43,57 @@ namespace Spg.AloMalo.DomainModel.Test
                 new TimeStampProvider()
             );
             Photo newPhoto1 = new Photo(
+                new Guid("11111111-1111-1111-1111-111111111111"),
                 "Test Photo bqwe",
                 "Beschreibung Test Photo 01...",
                 DateTime.Now,
                 ImageTypes.Png,
                 new Location(12, 17),
                 400, 800,
-                Orientations.Landscape,
                 false,
                 newPhotographer
             );
             Photo newPhoto2 = new Photo(
+                new Guid("11111111-1111-1111-1111-111111111111"),
                 "My Photo aqweqe",
                 "Beschreibung Test Photo 01...",
                 DateTime.Now,
                 ImageTypes.Png,
                 new Location(12, 17),
                 400, 800,
-                Orientations.Landscape,
                 false,
                 newPhotographer
             );
             Photo newPhoto3 = new Photo(
+                new Guid("11111111-1111-1111-1111-111111111111"),
                 "Test Photo arererttre",
                 "Beschreibung Test Photo 01...",
                 DateTime.Now,
                 ImageTypes.Png,
                 new Location(12, 17),
                 400, 800,
-                Orientations.Landscape,
                 false,
                 newPhotographer
             );
             Photo newPhoto4 = new Photo(
+                new Guid("11111111-1111-1111-1111-111111111111"),
                 "My Photo axvvxxvcxvc",
                 "Beschreibung Test Photo 01...",
                 DateTime.Now,
                 ImageTypes.Png,
                 new Location(12, 17),
                 400, 800,
-                Orientations.Landscape,
                 false,
                 newPhotographer
             );
             Photo newPhoto5 = new Photo(
+                new Guid("11111111-1111-1111-1111-111111111111"),
                 "Test Photo xdfssfdsfdfd",
                 "Beschreibung Test Photo 01...",
                 DateTime.Now,
                 ImageTypes.Png,
                 new Location(12, 17),
                 400, 800,
-                Orientations.Landscape,
                 false,
                 newPhotographer
             );

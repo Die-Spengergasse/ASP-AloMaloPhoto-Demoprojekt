@@ -31,12 +31,6 @@ namespace Spg.AloMalo.Repository.Builder
             return this;
         }
 
-        public IPhotoUpdateBuilder WithOrientation(Orientations orientation)
-        {
-            Entity.Orientation = orientation;
-            return this;
-        }
-
         public int Save()
         {
             _db.Update(Entity);

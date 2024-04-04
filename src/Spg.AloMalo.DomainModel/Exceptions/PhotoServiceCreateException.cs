@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Exceptions
 {
-    public class PhotoServiceCreateException : ExceptionBase
+    public class PhotoServiceCreateException : Exception
     {
-        private readonly string _message;
+        public PhotoServiceCreateException()
+             : base() { }
 
         public PhotoServiceCreateException(string message)
-        {
-            _message = message;
-        }
+            : base(message) { }
 
-        public static PhotoServiceCreateException FromSave()
+        public PhotoServiceCreateException(string message, Exception innerException)
+            : base(message, innerException) { }
+
+        public static PhotoServiceCreateException FromSave(Exception innerException)
         {
-            return new PhotoServiceCreateException("Save Photo failed!");
+            return new PhotoServiceCreateException("Save Photo failed!", innerException);
         }
     }
 }

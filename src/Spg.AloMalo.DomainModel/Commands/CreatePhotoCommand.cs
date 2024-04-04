@@ -1,4 +1,5 @@
-﻿using Spg.AloMalo.DomainModel.Model;
+﻿using Spg.AloMalo.DomainModel.Dtos;
+using Spg.AloMalo.DomainModel.Model;
 using System.ComponentModel.DataAnnotations;
 
 namespace Spg.AloMalo.DomainModel.Commands
@@ -6,11 +7,10 @@ namespace Spg.AloMalo.DomainModel.Commands
     public record CreatePhotoCommand(
         [StringLength(5, ErrorMessage = "Name zu lang")] string Name, 
         string Description, 
-        ImageTypes ImageType, 
-        Location Location, 
+        ImageTypesDto ImageType,
+        LocationDto Location, 
         int Width, 
-        int Height, 
-        Orientations Orientation, 
+        int Height,
         bool AiGenerated,
-        DateTime CreationTimeStamp);
+        Guid PhotographerId);
 }

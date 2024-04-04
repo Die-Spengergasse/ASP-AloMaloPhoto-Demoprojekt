@@ -11,11 +11,9 @@ namespace Spg.AloMalo.DomainModel.Exceptions
         public PhotoRepositoryException()
             : base()
         { }
-
         public PhotoRepositoryException(string message)
             : base(message)
         { }
-
         public PhotoRepositoryException(string message, Exception innerException)
             : base(message, innerException)
         { }

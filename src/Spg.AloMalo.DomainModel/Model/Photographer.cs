@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Model
 {
-    public class Photographer : User
+    public class Photographer : User, IFindableByGuid
     {
         public PhotographerId Id { get; set; } = default!;
+        public Guid Guid { get; private set; }
         public Address StudioAddress { get; set; } = default!;
         public PhoneNumber MobilePhoneNumber { get; set; } = default!;
         public PhoneNumber BusinessPhoneNumber { get; set; } = default!;
@@ -28,6 +29,7 @@ namespace Spg.AloMalo.DomainModel.Model
         protected Photographer()
         { }
         public Photographer(
+            Guid guid,
             string firstName,
             string lastName,
             Address studioAddress,
@@ -37,6 +39,7 @@ namespace Spg.AloMalo.DomainModel.Model
             EMail username)
             :base(firstName, lastName, username)
         {
+            Guid = guid;
             StudioAddress = studioAddress;
             MobilePhoneNumber = mobilePhoneNumber;
             BusinessPhoneNumber = businessPhoneNumber;

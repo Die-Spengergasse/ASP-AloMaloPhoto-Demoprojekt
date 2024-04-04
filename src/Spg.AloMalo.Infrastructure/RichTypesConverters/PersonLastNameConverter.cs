@@ -10,11 +10,10 @@ namespace Spg.AloMalo.Infrastructure.RichTypesConverters
 {
     public class PersonLastNameConverter : ValueConverter<LastName, string>
     {
-        public PersonLastNameConverter(ConverterMappingHints mappingHints = null!)
+        public PersonLastNameConverter()
             : base(
-                lastName => lastName.Value,
-                value => new LastName(value),
-                mappingHints
+                v => v.Value,
+                v => new LastName(v)
             )
         { }
     }

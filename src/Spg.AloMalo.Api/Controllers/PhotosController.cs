@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Spg.AloMalo.DomainModel.Commands;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Exceptions;
@@ -56,13 +55,21 @@ namespace Spg.AloMalo.Api.Controllers
         }
 
         [HttpGet()]
-        public IActionResult GetPhoto()
+        public IActionResult GetPhotos()
         {
             // Deswegen Rich Typed IDs
             //var r = _photoService.GetWhatEver(new PhotoId(123), new AlbumId(456), new PhotographerId(147));
 
             IQueryable<PhotoDto> result = _photoService.GetPhotos();
             return Ok(result);  // StatusCode 200, 204 (NoContent)
+        }
+
+
+        [HttpGet()]
+        public IActionResult GetPhotoById(PhotoId id)
+        {
+            // TODO: Implementation
+            return Ok();
         }
 
         [HttpPost()]
@@ -81,9 +88,9 @@ namespace Spg.AloMalo.Api.Controllers
             {
                 return NotFound();
             }
-            catch (PhotoServiceValidationException)
+            catch (PhotoServiceValidationException ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
             // catch (...)
             // ...
@@ -92,7 +99,14 @@ namespace Spg.AloMalo.Api.Controllers
         [HttpPut()]
         public IActionResult UpdatePhoto()
         {
-            _photoService.Update(null!);
+            _photoService.Update(null!); // TODO: Implementation
+            return Ok();
+        }
+
+        [HttpDelete()]
+        public IActionResult DeletePhoto()
+        {
+            //_photoService.Delete(null!); // TODO: Implementation
             return Ok();
         }
     }

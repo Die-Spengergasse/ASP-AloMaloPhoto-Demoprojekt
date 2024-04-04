@@ -28,6 +28,7 @@ namespace Spg.AloMalo.Repository.Test.Helpers
             return new List<Photographer>()
             {
                 new Photographer(
+                    new Guid("99999999-9999-9999-9999-999999999999"),
                     "Martin",
                     "Schrutek",
                     new Address("Photo Street 1", "1234", "Photoville", "Photanien"){ State= new() { Name = "NÖ" } }, //, new State("NÖ")
@@ -37,6 +38,7 @@ namespace Spg.AloMalo.Repository.Test.Helpers
                     new EMail("schrutek@spengergasse.at")
                 ),
                 new Photographer(
+                    new Guid("99999999-9999-9999-9999-999999999999"),
                     "Klaus",
                     "Unger",
                     new Address("Photo Street 2", "7985", "Photoville 2", "Photanien 2"){ State= new() { Name = "WIEN" } }, //, new State("NÖ")
