@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Repository.Builder
 {
-    public class AlbumFilterBuilder : IEntityReaderBuilder<Album>, IAlbumFilterBuilder
+    public class AlbumFilterBuilder : IEntityFilterBuilder<Album>, IAlbumFilterBuilder
     {
         public IQueryable<Album> EntityList { get; set; }
 

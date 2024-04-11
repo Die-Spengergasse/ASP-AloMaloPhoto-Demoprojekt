@@ -1,4 +1,5 @@
 ﻿using Spg.AloMalo.Application.Mock;
+using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Model;
@@ -23,7 +24,7 @@ namespace Spg.AloMalo.Application.MockController
         {
             var result = _albumService
                 .GetAll404()
-                .ResultOrExceptions<IQueryable<Album>, AlbumSerivceException, ArgumentException>(
+                .ResultOrExceptions<IQueryable<AlbumDto>, AlbumSerivceException, ArgumentException>(
                     r => r, 
                     e => $"{e.GetType().Name} - {e.Message}", 
                     e => $"{e.GetType().Name} - {e.Message}");

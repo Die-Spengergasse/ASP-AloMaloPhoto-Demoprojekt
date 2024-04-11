@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Validators.RichTypes
 {
-    public interface IRichType<TRichType>
+    public interface IRichType<TId>
     {
-        public TRichType? Value { get; set; }
+        public TId Value { get; }
     }
 }

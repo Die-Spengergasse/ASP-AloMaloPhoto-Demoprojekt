@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Spg.AloMalo.DomainModel.Exceptions;
-using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
+using Spg.AloMalo.DomainModel.Validators.RichTypes;
 using Spg.AloMalo.Infrastructure;
 
 namespace Spg.AloMalo.Repository.Repositories
@@ -10,9 +9,9 @@ namespace Spg.AloMalo.Repository.Repositories
         IWritablePhotoRepository, IReadOnlyPhotoRepository
     {
         public PhotoRepository(PhotoContext photoContext,
-            IPhotoFilterBuilder readBuilder,
+            IPhotoFilterBuilder filterBuilder,
             IPhotoUpdateBuilder updateBuilder)
-                : base(photoContext, readBuilder, updateBuilder)
+                : base(photoContext, filterBuilder, updateBuilder)
         { }
     }
 }

@@ -46,7 +46,8 @@ builder.Services.AddScoped<IAlbumService>(s => new AlbumServiceWrapper(s.GetRequ
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("allowSpecificOrigins", policy => {
+    options.AddPolicy("allowSpecificOrigins", policy =>
+    {
         policy.WithOrigins("http://localhost:4200");
         policy.WithHeaders("ACCESS-CONTROL-ALLOW-ORIGIN", "CONTENT-TYPE", "other-info");
     });
@@ -68,3 +69,6 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program
+{ }

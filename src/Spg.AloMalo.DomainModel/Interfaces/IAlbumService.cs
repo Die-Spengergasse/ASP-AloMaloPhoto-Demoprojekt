@@ -1,4 +1,5 @@
-﻿using Spg.AloMalo.DomainModel.Error;
+﻿using Spg.AloMalo.DomainModel.Dtos;
+using Spg.AloMalo.DomainModel.Error;
 using Spg.AloMalo.DomainModel.Model;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace Spg.AloMalo.DomainModel.Interfaces
 {
     public interface IAlbumService
     {
-        ErrorCheck<IQueryable<Album>> GetAllOk();
-        ErrorCheck<IQueryable<Album>> GetAll400();
-        ErrorCheck<IQueryable<Album>> GetAll404();
+        ErrorCheck<IQueryable<AlbumDto>> GetAllOk();
+        ErrorCheck<IQueryable<AlbumDto>> GetAll400();
+        ErrorCheck<IQueryable<AlbumDto>> GetAll404();
     }
 }

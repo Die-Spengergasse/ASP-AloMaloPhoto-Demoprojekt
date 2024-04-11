@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 {
-    public interface IEntityReaderBuilder<TEntity>
+    public interface IEntityFilterBuilder<TEntity>
         where TEntity : class
     {
         IQueryable<TEntity> EntityList { get; set; }

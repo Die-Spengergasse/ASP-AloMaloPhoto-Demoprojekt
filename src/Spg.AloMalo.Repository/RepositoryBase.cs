@@ -3,6 +3,7 @@ using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Interfaces.Findables;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
+using Spg.AloMalo.DomainModel.Validators.RichTypes;
 using Spg.AloMalo.Infrastructure;
 using System.Linq.Expressions;
 
@@ -95,9 +96,11 @@ namespace Spg.AloMalo.Repository
             }
         }
 
-        public void Delete(PhotoId id)
+        public void Delete<TId>(IRichType<TId> richTypeId)
         {
-            TEntity foundEntity = _photoContext.Set<TEntity>().Find(id.Value) ??
+            var id = richTypeId.Value;
+
+            TEntity foundEntity = _photoContext.Set<TEntity>().Find(id) ??
                 throw PhotoRepositoryException.FromDelete();
 
             _photoContext.Set<TEntity>().Remove(foundEntity);

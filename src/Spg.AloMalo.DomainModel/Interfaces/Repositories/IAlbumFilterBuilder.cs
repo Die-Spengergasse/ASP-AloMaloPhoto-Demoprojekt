@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 {
-    public interface IAlbumFilterBuilder : IEntityReaderBuilder<Album>
+    public interface IAlbumFilterBuilder : IEntityFilterBuilder<Album>
     {
         new IQueryable<Album> EntityList { get; set; }
 

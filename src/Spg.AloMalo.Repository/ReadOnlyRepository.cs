@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Repository
 {
-    public class ReadOnlyRepository<TEntity, TReadBilder>
-        : RepositoryBase<TEntity>, IReadOnlyRepository<TReadBilder>
+    public class ReadOnlyRepository<TEntity, TFilterBilder>
+        : RepositoryBase<TEntity>, IReadOnlyRepository<TFilterBilder>
         where TEntity : class
-        where TReadBilder : IEntityReaderBuilder<TEntity>
+        where TFilterBilder : IEntityFilterBuilder<TEntity>
     {
-        public TReadBilder ReadBuilder { get; set; }
+        public TFilterBilder FilterBuilder { get; set; }
 
         public ReadOnlyRepository(
             PhotoContext photoContext,
-            TReadBilder readBuilder)
+            TFilterBilder filterBuilder)
                 : base(photoContext)
         {
-            ReadBuilder = readBuilder;
+            FilterBuilder = filterBuilder;
         }
     }
 }

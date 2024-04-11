@@ -19,7 +19,7 @@ namespace Spg.AloMalo.Repository.Repositories
 
         public IQueryable<Album> GetAll()
         {
-            IQueryable<Album> data = ReadBuilder.Build();
+            IQueryable<Album> data = FilterBuilder.Build();
             return data;
         }
     }

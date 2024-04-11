@@ -8,6 +8,6 @@ namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 {
     public interface IReadOnlyRepository<TReadBilder>
     {
-        TReadBilder ReadBuilder { get; set; }
+        TReadBilder FilterBuilder { get; set; }
     }
 }

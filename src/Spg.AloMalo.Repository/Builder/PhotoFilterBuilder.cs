@@ -3,7 +3,7 @@ using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.Repository.Builder
 {
-    public class PhotoFilterBuilder : IEntityReaderBuilder<Photo>, IPhotoFilterBuilder
+    public class PhotoFilterBuilder : IPhotoFilterBuilder
     {
         public IQueryable<Photo> EntityList { get; set; }
 

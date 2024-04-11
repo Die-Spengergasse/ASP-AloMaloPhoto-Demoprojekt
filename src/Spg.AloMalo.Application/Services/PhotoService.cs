@@ -47,7 +47,7 @@ namespace Spg.AloMalo.Application.Services
         public IQueryable<PhotoDto> GetPhotos()
         {
             IQueryable<PhotoDto> result = _readOnlyPhotoRepository
-                .ReadBuilder
+                .FilterBuilder
                 .ApplyNameContainsFilter("My")
                 .Build()
                     .Select(p => 

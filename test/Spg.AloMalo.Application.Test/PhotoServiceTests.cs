@@ -20,28 +20,5 @@ namespace Spg.AloMalo.Application.Test
         {
             Assert.True(true);
         }
-
-        //public void ShouldNOTCreate_WhenCreationDateInPast()
-        //{
-        //    var db = DatabaseUtilities.CreateDb();
-        //    // Arrange
-        //    CreatePhotoCommand command = new CreatePhotoCommand(
-        //        "",
-        //        "",
-        //        DomainModel.Model.ImageTypes.Unknown,
-        //        new DomainModel.Model.Location(123, 123), 123, 123,
-        //        DomainModel.Model.Orientations.Portrait,
-        //        false, new DateTime(2020, 05, 16));
-
-        //    var ut = new PhotoService(
-        //        null,
-        //        new PhotoRepository(db,
-        //            new PhotoUpdateBuilder(db)),
-        //                new DateTimeServiceMock());
-
-        //    // Act
-
-        //    // Assert
-        //}
     }
 }

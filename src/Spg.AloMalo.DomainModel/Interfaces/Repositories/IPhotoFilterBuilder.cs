@@ -2,7 +2,7 @@
 
 namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 {
-    public interface IPhotoFilterBuilder : IEntityReaderBuilder<Photo>
+    public interface IPhotoFilterBuilder : IEntityFilterBuilder<Photo>
     {
         IPhotoFilterBuilder ApplyIdFilter(PhotoId id);
         IPhotoFilterBuilder ApplyNameContainsFilter(string filter);

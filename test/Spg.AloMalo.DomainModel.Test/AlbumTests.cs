@@ -7,14 +7,8 @@ using Spg.AloMalo.Infrastructure;
 
 namespace Spg.AloMalo.DomainModel.Test;
 
-public class AlbumTests // : IClassFixture<DatabaseFixture>
+public class AlbumTests
 {
-    //private readonly DatabaseFixture _databaseFixture;
-
-    //public AlbumTests(DatabaseFixture databaseFixture)
-    //{
-    //    _databaseFixture = databaseFixture;
-    //}
 
     [Fact]
     public void Album_ShouldCreate_WhenEntitiesComplete()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spg.AloMalo.DomainModel.Validators.RichTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Model
 {
-    public record AlbumId(int Value)
+    public record AlbumId(int Value) : IRichType<int>
     { }
 
-    public record PhotographerId(int Value)
+    public record PhotographerId(int Value) : IRichType<int>
     { }
 
-    public record PersonId(int Value)
+    public record PersonId(int Value) : IRichType<int>
     { }
 
-    public record PhotoId(int Value)
+    public record PhotoId(int Value) : IRichType<int>
     { }
 
-    public record AlbumPhotoId(int Value)
+    public record AlbumPhotoId(int Value) : IRichType<int>
     { }
 
     #region -- with class -------------------------------------------------------------------------

@@ -15,6 +15,9 @@ namespace Spg.AloMalo.Infrastructure
     // https://testcontainers.com/guides/testing-an-aspnet-core-web-app/
     // https://github.com/testcontainers/testcontainers-dotnet/blob/develop/examples/WeatherForecast/src/WeatherForecast/DatabaseContainer.cs
 
+    // * Inheritance Mapping:
+    // https://learn.microsoft.com/en-us/ef/core/modeling/inheritance
+
     // 1. Klasse vo DbContext ableiten (NuGet-Package EF Core installieren)
     public class PhotoContext : DbContext
     {

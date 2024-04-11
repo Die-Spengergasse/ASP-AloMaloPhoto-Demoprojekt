@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Spg.AloMalo.DomainModel.Error;
-using Spg.AloMalo.DomainModel.Exceptions;
-using System;
-using System.Runtime.CompilerServices;
 
 namespace Spg.AloMalo.Api.Controllers
 {

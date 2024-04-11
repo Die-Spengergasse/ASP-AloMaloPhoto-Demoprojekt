@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Validators\RichTypes\IValidateable.cs" />
+    <Compile Remove="Validators\RichTypes\RichTypeBase.cs" />
+    <Compile Remove="Validators\RichTypes\Validator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Queries\" />
   </ItemGroup>
 

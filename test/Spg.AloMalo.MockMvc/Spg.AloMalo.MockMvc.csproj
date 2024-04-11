@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Spg.AloMalo.Api\Spg.AloMalo.Api.csproj" />
     <ProjectReference Include="..\..\src\Spg.AloMalo.Infrastructure\Spg.AloMalo.Infrastructure.csproj" />
   </ItemGroup>
 

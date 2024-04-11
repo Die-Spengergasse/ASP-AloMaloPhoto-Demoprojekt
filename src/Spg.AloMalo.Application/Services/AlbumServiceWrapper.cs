@@ -1,4 +1,5 @@
-﻿using Spg.AloMalo.DomainModel.Error;
+﻿using Spg.AloMalo.DomainModel.Dtos;
+using Spg.AloMalo.DomainModel.Error;
 using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Model;
 
@@ -13,7 +14,7 @@ namespace Spg.AloMalo.Application.Services
             _albumService = albumService;
         }
 
-        public ErrorCheck<IQueryable<Album>> GetAllOk()
+        public ErrorCheck<IQueryable<AlbumDto>> GetAllOk()
         {
             try
             {
@@ -27,7 +28,7 @@ namespace Spg.AloMalo.Application.Services
             }
         }
 
-        public ErrorCheck<IQueryable<Album>> GetAll400()
+        public ErrorCheck<IQueryable<AlbumDto>> GetAll400()
         {
             try
             {
@@ -39,7 +40,7 @@ namespace Spg.AloMalo.Application.Services
             }
         }
 
-        public ErrorCheck<IQueryable<Album>> GetAll404()
+        public ErrorCheck<IQueryable<AlbumDto>> GetAll404()
         {
             try
             {

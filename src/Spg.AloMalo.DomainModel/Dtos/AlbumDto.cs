@@ -8,13 +8,10 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Dtos
 {
-    public class AlbumDto
-    {
+    public record AlbumDto(
         [StringLength(maximumLength: 5)]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public DateTime CreationTimeStamp { get; private set; }
-
-        //public Photographer Owner { get; set; } = default!;
-    }
+        string Name,
+        string Description,
+        DateTime CreationTimeStamp
+    );
 }

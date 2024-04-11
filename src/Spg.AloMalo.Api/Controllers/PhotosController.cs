@@ -64,14 +64,6 @@ namespace Spg.AloMalo.Api.Controllers
             return Ok(result);  // StatusCode 200, 204 (NoContent)
         }
 
-
-        [HttpGet()]
-        public IActionResult GetPhotoById(PhotoId id)
-        {
-            // TODO: Implementation
-            return Ok();
-        }
-
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

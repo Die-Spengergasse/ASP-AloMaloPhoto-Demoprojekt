@@ -9,7 +9,7 @@ namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 {
     public interface IReadOnlyAlbumRepository
     {
-        IAlbumFilterBuilder ReadBuilder { get; }
+        IAlbumFilterBuilder FilterBuilder { get; }
 
         IQueryable<Album> GetAll();
     }

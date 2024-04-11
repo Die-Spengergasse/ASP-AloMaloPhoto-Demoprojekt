@@ -21,7 +21,7 @@ namespace Spg.AloMalo.MvcFrontEnd.Controllers
         public IActionResult Index()
         {
             // TODO: Liste laden
-            ErrorCheck<IQueryable<Album>> data = _albumService.GetAllOk();
+            ErrorCheck<IQueryable<AlbumDto>> data = _albumService.GetAllOk();
             return View(data.Value);
         }
 

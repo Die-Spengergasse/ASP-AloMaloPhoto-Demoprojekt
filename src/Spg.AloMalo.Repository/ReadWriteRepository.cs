@@ -13,19 +13,19 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Repository
 {
-    public class ReadWriteRepository<TEntity, TReadBilder, TUpdateBuilder> 
-        : ReadOnlyRepository<TEntity, TReadBilder>, IReadWriteRepository<TEntity, TUpdateBuilder>
+    public class ReadWriteRepository<TEntity, TFilterBilder, TUpdateBuilder> 
+        : ReadOnlyRepository<TEntity, TFilterBilder>, IReadWriteRepository<TEntity, TUpdateBuilder>
         where TEntity : class
-        where TReadBilder : class, IEntityReaderBuilder<TEntity>
+        where TFilterBilder : class, IEntityFilterBuilder<TEntity>
         where TUpdateBuilder : class, IEntityUpdateBuilder<TEntity>
     {
         public IUpdateBuilderBase<TEntity, TUpdateBuilder> UpdateBuilder { get; }
 
         public ReadWriteRepository(
             PhotoContext photoContext,
-            TReadBilder readBuilder,
+            TFilterBilder filterBuilder,
             TUpdateBuilder updateBuilder)
-                : base(photoContext, readBuilder)
+                : base(photoContext, filterBuilder)
         {
             UpdateBuilder = new UpdateBuilderBase<TEntity, TUpdateBuilder>(updateBuilder);
         }

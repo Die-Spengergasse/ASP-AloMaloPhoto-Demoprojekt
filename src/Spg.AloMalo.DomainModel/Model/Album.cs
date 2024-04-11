@@ -1,4 +1,5 @@
-﻿using Spg.AloMalo.DomainModel.Interfaces;
+﻿using Spg.AloMalo.DomainModel.Dtos;
+using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Validators;
 using System.ComponentModel.DataAnnotations;
 
@@ -61,6 +62,11 @@ namespace Spg.AloMalo.DomainModel.Model
                 _albumPhotos.Add(new AlbumPhoto(this, newPhoto, 1));
             }
             return this;
+        }
+
+        public AlbumDto ToDto()
+        {
+            return new AlbumDto(Name, Description, CreationTimeStamp);
         }
 
         public Album Validate()
