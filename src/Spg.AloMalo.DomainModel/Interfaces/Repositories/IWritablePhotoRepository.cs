@@ -10,7 +10,7 @@ namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 
     public interface IDeleteablePhotoRepository
     {
-        void Delete<TId>(IRichType<TId> id);
+        void Delete<TId, RichType>(IRichType<TId> richType);
     }
 
     public interface IUpdateablePhotoRepository

@@ -1,4 +1,5 @@
-﻿using Spg.AloMalo.DomainModel.Validators.RichTypes;
+﻿using Spg.AloMalo.DomainModel.Model.RichTypes;
+using Spg.AloMalo.DomainModel.Validators.RichTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

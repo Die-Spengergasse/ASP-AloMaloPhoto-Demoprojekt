@@ -28,6 +28,9 @@ namespace Spg.AloMalo.Infrastructure
         public DbSet<Person> Persons => Set<Person>();
         public DbSet<Payment> Payments => Set<Payment>();
 
+
+        public DbSet<AlbumPhoto> AlbumPhotos => Set<AlbumPhoto>();
+
         // 3. Konstruktoren
         public PhotoContext()
         { }
