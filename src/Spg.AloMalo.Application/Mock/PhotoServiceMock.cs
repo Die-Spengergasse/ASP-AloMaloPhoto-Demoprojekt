@@ -2,17 +2,12 @@
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Application.Mock
 {
     public class PhotoServiceMock : IPhotoService
     {
-        public Photo Create(CreatePhotoCommand command)
+        public PhotoDto Create(CreatePhotoCommand command)
         {
             // Info:Create aber nicht in die echte DB sondern in eine Fake-Db oder Liste 
             throw new NotImplementedException();

@@ -74,7 +74,8 @@ namespace Spg.AloMalo.Api.Controllers
             // (Lösung im AlbumController)
             try
             {
-                return Created("api/photos/[GUID]", _photoService.Create(command)); // StatusCode 201
+                PhotoDto dto = _photoService.Create(command);
+                return Created($"api/photos/{dto.Id}", dto); // StatusCode 201
             }
             catch (PhotoServiceCreateException)
             {

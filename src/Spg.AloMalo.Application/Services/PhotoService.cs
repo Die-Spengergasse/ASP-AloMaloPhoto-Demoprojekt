@@ -51,12 +51,16 @@ namespace Spg.AloMalo.Application.Services
                 .ApplyNameContainsFilter("My")
                 .Build()
                     .Select(p => 
-                        new PhotoDto(p.Name, p.Description, p.ImageType, p.Orientation));
-
+                        new PhotoDto(
+                            p.Guid, 
+                            p.Name, 
+                            p.Description, 
+                            ImageTypesMapper.ToDto(p.ImageType), 
+                            OrientationsMapper.ToDto(p.Orientation)));
             return result;
         }
 
-        public Photo Create(CreatePhotoCommand command)
+        public PhotoDto Create(CreatePhotoCommand command)
         {
             _logger.LogDebug("Initalisation");
             Photographer photographer = _photographerRepository.GetByGuid<Photographer>(command.PhotographerId)
@@ -125,7 +129,7 @@ namespace Spg.AloMalo.Application.Services
                 throw PhotoServiceCreateException.FromSave(ex);
             }
 
-            return null!;
+            return newPhoto.ToDto();
         }
 
         public void Update(Photo photo)

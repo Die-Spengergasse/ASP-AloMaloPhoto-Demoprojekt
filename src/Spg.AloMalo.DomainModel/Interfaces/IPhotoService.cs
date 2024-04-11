@@ -8,7 +8,7 @@ namespace Spg.AloMalo.DomainModel.Interfaces
     {
         IQueryable<PhotoDto> GetWhatEver(PhotoId photoId, AlbumId albumId, PhotographerId photograperId);
         IQueryable<PhotoDto> GetPhotos();
-        Photo Create(CreatePhotoCommand command);
+        PhotoDto Create(CreatePhotoCommand command);
         void Update(Photo photo);
     }
 }

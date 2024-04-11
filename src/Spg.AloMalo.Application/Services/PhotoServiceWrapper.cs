@@ -2,12 +2,6 @@
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Spg.AloMalo.Application.Services
 {
@@ -20,7 +14,7 @@ namespace Spg.AloMalo.Application.Services
             _photoService = photoService;
         }
 
-        public Photo Create(CreatePhotoCommand command)
+        public PhotoDto Create(CreatePhotoCommand command)
         {
             return _photoService.Create(command);
         }
