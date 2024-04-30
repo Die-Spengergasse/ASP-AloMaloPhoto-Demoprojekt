@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Spg.AloMalo.Application.Services.Helpers;
 using Spg.AloMalo.Application.Services;
-using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+using Spg.AloMalo.Application.Services.Helpers;
 using Spg.AloMalo.DomainModel.Interfaces;
+using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.Infrastructure;
 using Spg.AloMalo.Repository.Builder;
 using Spg.AloMalo.Repository.Repositories;

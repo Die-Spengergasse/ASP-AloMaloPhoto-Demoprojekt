@@ -1,39 +1,28 @@
-﻿using Microsoft.Extensions.Logging;
-using Spg.AloMalo.DomainModel.Commands;
+﻿using Spg.AloMalo.DomainModel.Commands;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
-using Spg.AloMalo.Infrastructure;
-using Spg.AloMalo.Repository;
-using Spg.AloMalo.Repository.Extensions;
-using Spg.AloMalo.Repository.Repositories;
 
 namespace Spg.AloMalo.Application.Services
 {
     public class PhotoService : IPhotoService
     {
-        private readonly PhotoContext _dbContext;
         private readonly IWritablePhotoRepository _writablePhotoRepository;
         private readonly IReadOnlyPhotoRepository _readOnlyPhotoRepository;
         private readonly IPhotographerRepository _photographerRepository;
-        private readonly ILogger<PhotoService> _logger;
         private readonly IDateTimeService _dateTimeService;
 
         public PhotoService(
-            PhotoContext dbContext, 
-            ILogger<PhotoService> logger, 
             IReadOnlyPhotoRepository readOnlyPhotoRepository,
             IWritablePhotoRepository photoRepository,
             IPhotographerRepository photographerRepository,
             IDateTimeService dateTimeService)
         {
-            _dbContext = dbContext;
             _writablePhotoRepository = photoRepository;
             _readOnlyPhotoRepository = readOnlyPhotoRepository;
             _photographerRepository = photographerRepository;
-            _logger = logger;
             _dateTimeService = dateTimeService;
         }
 
@@ -62,17 +51,13 @@ namespace Spg.AloMalo.Application.Services
 
         public PhotoDto Create(CreatePhotoCommand command)
         {
-            _logger.LogDebug("Initalisation");
             Photographer photographer = _photographerRepository.GetByGuid<Photographer>(command.PhotographerId)
                 ?? throw PhotoServiceValidationException.FromPhotographerRequired();
 
-            _logger.LogDebug("Validation");
             if (string.IsNullOrEmpty(command.Name))
             {
                 throw PhotoServiceValidationException.FromLastNameRequired();
             }
-
-            _logger.LogDebug("Action");
 
             DateTime creationTimeStamp = DateTime.Now;
             Guid guid = Guid.NewGuid();
@@ -119,13 +104,10 @@ namespace Spg.AloMalo.Application.Services
             // Save
             try
             {
-                _logger.LogDebug("Save");
                 _writablePhotoRepository.Create(newPhoto);
-                _logger.LogInformation("Successfully saved");
             }
             catch (PhotoRepositoryException ex)
             {
-                _logger.LogError("save failed");
                 throw PhotoServiceCreateException.FromSave(ex);
             }
 
@@ -152,11 +134,12 @@ namespace Spg.AloMalo.Application.Services
                 .Save();
 
             // ohne Repository-Pattern
-            _dbContext
-                .UpdatePhoto(foundEntity)
-                .WithName("New Name")
-                .WithDescription("New Description of this Photo (updated)!")
-                .Save();
+            // (Achtung!! keine Referenz zu Repository, wegen Clean Architecture)
+            //_dbContext
+            //    .UpdatePhoto(foundEntity)
+            //    .WithName("New Name")
+            //    .WithDescription("New Description of this Photo (updated)!")
+            //    .Save();
         }
     }
 }

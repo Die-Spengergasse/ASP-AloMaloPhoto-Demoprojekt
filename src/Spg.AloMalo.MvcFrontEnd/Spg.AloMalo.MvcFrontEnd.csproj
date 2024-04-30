@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Spg.AloMalo.Application\Spg.AloMalo.Application.csproj" />
     <ProjectReference Include="..\Spg.AloMalo.DomainModel\Spg.AloMalo.DomainModel.csproj" />
+    <ProjectReference Include="..\Spg.AloMalo.Repository\Spg.AloMalo.Repository.csproj" />
   </ItemGroup>
 
 </Project>

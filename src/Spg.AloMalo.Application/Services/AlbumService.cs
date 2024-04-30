@@ -3,8 +3,6 @@ using Spg.AloMalo.DomainModel.Error;
 using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
-using Spg.AloMalo.DomainModel.Model;
-using Spg.AloMalo.Infrastructure;
 
 namespace Spg.AloMalo.Application.Services
 {

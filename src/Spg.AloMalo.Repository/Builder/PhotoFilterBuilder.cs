@@ -27,12 +27,22 @@ namespace Spg.AloMalo.Repository.Builder
             EntityList = EntityList.Where(x => x.Name.Contains(name));
             return this;
         }
+        public IPhotoFilterBuilder ApplyNameBeginsWithFilter(string name)
+        {
+            EntityList = EntityList.Where(x => x.Name.StartsWith(name));
+            return this;
+        }
+        public IPhotoFilterBuilder ApplyNameEndsWithFilter(string name)
+        {
+            EntityList = EntityList.Where(x => x.Name.EndsWith(name));
+            return this;
+        }
         public IPhotoFilterBuilder ApplyOrientationFilter(Orientations orientation)
         {
             EntityList = EntityList.Where(x => x.Orientation == orientation);
             return this;
         }
-        public IPhotoFilterBuilder ApplayAiFilter(bool @is)
+        public IPhotoFilterBuilder ApplyAiFilter(bool @is)
         {
             EntityList = EntityList.Where(x => x.AiGenerated == @is);
             return this;

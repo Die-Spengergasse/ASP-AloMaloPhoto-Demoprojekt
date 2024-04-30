@@ -2,8 +2,6 @@
 using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Interfaces.Findables;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
-using Spg.AloMalo.DomainModel.Model;
-using Spg.AloMalo.DomainModel.Model.RichTypes;
 using Spg.AloMalo.DomainModel.Validators.RichTypes;
 using Spg.AloMalo.Infrastructure;
 using System.Linq.Expressions;

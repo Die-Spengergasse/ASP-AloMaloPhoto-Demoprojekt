@@ -1,0 +1,28 @@
+﻿@model Spg.General.IdentityProvider.Models.UserInformationDto
+
+<h3>Details:</h3>
+
+<div>
+    <div class="mb-3">
+        <label for="UserName" class="form-label">User Name:</label>
+        <input type="text" class="form-control" asp-for="UserName" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="FullName" class="form-label">FullName:</label>
+        <input type="text" class="form-control" asp-for="FullName" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="EMail" class="form-label">EMail:</label>
+        <input type="email" class="form-control" asp-for="EMail" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="Role" class="form-label">Role:</label>
+        <input type="text" class="form-control" asp-for="Role" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="Token" class="form-label">Bearer Token:</label>
+        <textarea class="form-control" asp-for="Token" rows="6" disabled></textarea>
+    </div>
+
+    <button asp-action="Index" class="btn btn-success">Back</button>
+</div>

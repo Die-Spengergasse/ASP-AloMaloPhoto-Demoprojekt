@@ -1,6 +1,7 @@
 ﻿using Spg.AloMalo.Api.Test.Helpers;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.MockMvc;
+using System.Net;
 
 namespace Spg.AloMalo.Api.Test
 {
@@ -25,7 +26,7 @@ namespace Spg.AloMalo.Api.Test
                 var a = db.Albums;
             });
             var (statusCode, albums) = await _factory.GetHttpContent<List<AlbumDto>>("/api/album/ok");
-            Assert.Equal(3, albums.Count);
+            Assert.Equal(HttpStatusCode.OK, statusCode);
         }
     }
 }

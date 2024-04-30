@@ -3,7 +3,7 @@ using Spg.AloMalo.DomainModel.Commands;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Interfaces;
-using Spg.AloMalo.DomainModel.Model;
+using System.Net.Http.Headers;
 
 namespace Spg.AloMalo.Api.Controllers
 {
@@ -52,6 +52,41 @@ namespace Spg.AloMalo.Api.Controllers
         public PhotosController(IPhotoService photoService)
         {
             _photoService = photoService;
+        }
+
+        // https://code-maze.com/upload-files-dot-net-core-angular/
+        [HttpPost("upload"), DisableRequestSizeLimit]
+        public IActionResult Upload()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("Resources", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue
+                        .Parse(file.ContentDisposition)
+                        .FileName
+                        ?.Trim('"') 
+                            ?? "";
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    return Ok(new { dbPath });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
         }
 
         [HttpGet()]

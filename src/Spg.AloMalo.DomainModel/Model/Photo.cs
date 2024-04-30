@@ -1,13 +1,6 @@
 ﻿using Spg.AloMalo.DomainModel.Dtos;
-using Spg.AloMalo.DomainModel.Model.RichTypes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Model
 {
@@ -92,6 +85,10 @@ namespace Spg.AloMalo.DomainModel.Model
             {
                 _albumPhotos.Add(new AlbumPhoto(newAlbum, this, 1));
             }
+            else
+            {
+                // logger.Log("");
+            }
             return this;
         }
 
@@ -102,6 +99,16 @@ namespace Spg.AloMalo.DomainModel.Model
                 Name, 
                 Description, 
                 ImageTypesMapper.ToDto(ImageType), 
+                OrientationsMapper.ToDto(Orientation));
+        }
+
+        public CreatePhotoReponseDto ToDtoCqs()
+        {
+            return new CreatePhotoReponseDto(
+                Guid,
+                Name,
+                Description,
+                ImageTypesMapper.ToDto(ImageType),
                 OrientationsMapper.ToDto(Orientation));
         }
     }

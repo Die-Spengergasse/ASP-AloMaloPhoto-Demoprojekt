@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Spg.AloMalo.DomainModel.Model;
-using Spg.AloMalo.DomainModel.Model.RichTypes;
 using Spg.AloMalo.Infrastructure.IdConverters;
-using Spg.AloMalo.Infrastructure.RichTypesConverters;
-using System;
-using System.Reflection.Emit;
 
 namespace Spg.AloMalo.Infrastructure
 {

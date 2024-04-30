@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
@@ -14,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Spg.AloMalo.DomainModel\Spg.AloMalo.DomainModel.csproj" />
     <ProjectReference Include="..\Spg.AloMalo.Application\Spg.AloMalo.Application.csproj" />
+    <ProjectReference Include="..\Spg.AloMalo.Repository\Spg.AloMalo.Repository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Spg.AloMalo.DomainModel.Exceptions;
-using Spg.AloMalo.DomainModel.Interfaces.Findables;
-using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.Infrastructure;
 using Spg.AloMalo.Repository.Builder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Repository
 {

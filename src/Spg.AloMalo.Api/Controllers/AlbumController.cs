@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Spg.AloMalo.Application.MockController;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Exceptions;
@@ -17,6 +18,8 @@ namespace Spg.AloMalo.Api.Controllers
             _albumService = albumService;
         }
 
+        //[Authorize(Policy = "RequireAdministratorRole")]
+        //[Authorize(Policy = "NoHomers")]
         [HttpGet("ok")]
         public IActionResult GetAlbums()
         {

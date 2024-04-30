@@ -1,5 +1,4 @@
-﻿using Bogus;
-using Spg.AloMalo.DomainModel.Model;
+﻿using Spg.AloMalo.DomainModel.Model;
 using Spg.AloMalo.Infrastructure;
 using Spg.AloMalo.Repository.Builder;
 using Spg.AloMalo.Repository.Repositories;
@@ -71,7 +70,7 @@ namespace Spg.AloMalo.Repository.Test
                 AlbumRepository utt = new AlbumRepository(db, new AlbumFilterBuilder(db.Albums));
 
                 // Act
-                Album? actual = utt.GetByPK<AlbumId, AlbumId>(new AlbumId(2));
+                Album? actual = utt.GetByPK<AlbumId, AlbumPhoto>(new AlbumId(2));
 
                 // Assert
                 Assert.NotNull(actual);

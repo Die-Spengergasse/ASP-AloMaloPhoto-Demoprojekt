@@ -1,10 +1,4 @@
-﻿using Spg.AloMalo.DomainModel.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Spg.AloMalo.DomainModel.Dtos
 {

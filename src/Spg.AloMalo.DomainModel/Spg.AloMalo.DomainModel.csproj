@@ -12,8 +12,4 @@
     <Compile Remove="Validators\RichTypes\Validator.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
 </Project>
