@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Spg.AloMalo.Application.Services.PhotoUseCases.Filters;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 
@@ -15,17 +16,17 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 
         public Task<List<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
         {
-            IPhotoFilterBuilder builder =
-                _photoRepository
-                .FilterBuilder;
+            IPhotoFilterBuilder builder = _photoRepository.FilterBuilder;
 
-            builder = new LastNameContainsParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameBeginsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameEndsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            // builder = new ...
+            var filters = request.Query.Filter.Split(';');
+            foreach (var filter in filters)
+            {
+                builder = new NameContainsParameter(builder).Compile(filter);
+                builder = new NameEqualsParameter(builder).Compile(filter);
+                builder = new NameStartsWithParameter(builder).Compile(filter);
+                builder = new NameEndsWithParameter(builder).Compile(filter);
+                builder = new NameRegexParameter(builder).Compile(filter);
+            }
 
             return Task.FromResult(
                 builder
