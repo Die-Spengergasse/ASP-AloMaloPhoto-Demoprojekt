@@ -2,6 +2,7 @@
 using Spg.AloMalo.Application.Services.PhotoUseCases.Filters;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
@@ -21,11 +22,40 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             var filters = request.Query.Filter.Split(';');
             foreach (var filter in filters)
             {
-                builder = new NameContainsParameter(builder).Compile(filter);
-                builder = new NameEqualsParameter(builder).Compile(filter);
-                builder = new NameStartsWithParameter(builder).Compile(filter);
-                builder = new NameEndsWithParameter(builder).Compile(filter);
-                builder = new NameRegexParameter(builder).Compile(filter);
+                var parts = filter.Split(' ');
+                if (parts.Length == 3)
+                {
+                    var property = parts[0];
+                    var operation = parts[1];
+                    var value = parts[2];
+
+                    switch (property.ToLower())
+                    {
+                        case "name":
+                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Name, operation, value).Compile(filter);
+                            break;
+                        case "description":
+                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Description, operation, value).Compile(filter);
+                            break;
+                        case "location":
+                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Location, operation, value).Compile(filter);
+                            break;
+                        case "width":
+                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Width, operation, value).Compile(filter);
+                            break;
+                        case "height":
+                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Height, operation, value).Compile(filter);
+                            break;
+                        case "orientation":
+                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Orientation, operation, value).Compile(filter);
+                            break;
+                        case "aigenerated":
+                            builder = new PropertyFilterParameter<Photo>(builder, p => p.AiGenerated, operation, value).Compile(filter);
+                            break;
+                        default:
+                            throw new InvalidOperationException("Unknown property");
+                    }
+                }
             }
 
             return Task.FromResult(
@@ -36,4 +66,5 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             );
         }
     }
+
 }
