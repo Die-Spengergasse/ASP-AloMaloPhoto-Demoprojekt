@@ -15,15 +15,13 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 
         public Task<List<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
         {
-            IPhotoFilterBuilder builder =
-                _photoRepository
-                .FilterBuilder;
+            IPhotoFilterBuilder builder = _photoRepository.FilterBuilder;
 
-            builder = new LastNameContainsParameter(builder)
+            builder = new NameContainsParameter(builder)
                 .Compile(request.Query.Filter);
-            builder = new LastNameBeginsWithParameter(builder)
+            builder = new NameBeginsWithParameter(builder)
                 .Compile(request.Query.Filter);
-            builder = new LastNameEndsWithParameter(builder)
+            builder = new NameEndsWithParameter(builder)
                 .Compile(request.Query.Filter);
             // builder = new ...
 
