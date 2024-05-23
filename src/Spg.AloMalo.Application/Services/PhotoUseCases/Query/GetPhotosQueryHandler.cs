@@ -19,13 +19,9 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
                 _photoRepository
                 .FilterBuilder;
 
-            builder = new LastNameContainsParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameBeginsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameEndsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            // builder = new ...
+            builder = new PhotoBeginsWithHandler(builder).WithQuery(request.Query.Filter);
+            builder = new PhotoContainsHandler(builder).WithQuery(request.Query.Filter);
+            builder = new PhotoEndsWithHandler(builder).WithQuery(request.Query.Filter);
 
             return Task.FromResult(
                 builder
