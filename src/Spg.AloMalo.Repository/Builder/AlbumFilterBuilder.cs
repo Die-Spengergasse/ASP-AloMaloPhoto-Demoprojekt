@@ -1,38 +1,78 @@
-﻿using Bogus.DataSets;
+﻿using Spg.AloMalo.DomainModel.Entities;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
-using Spg.AloMalo.DomainModel.Model;
+using Spg.AloMalo.Repository.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Repository.Builder
 {
-    public class AlbumFilterBuilder : IEntityFilterBuilder<Album>, IAlbumFilterBuilder
+    public class AlbumFilterBuilder : IAlbumFilterBuilder
     {
-        public IQueryable<Album> EntityList { get; set; }
+        private List<Func<Album, bool>> _filters = new List<Func<Album, bool>>();
+        private GenericFilter<Album> _genericFilter = new GenericFilter<Album>();
 
-        public AlbumFilterBuilder(IQueryable<Album> albums)
+        public IAlbumFilterBuilder WithTitle(string title)
         {
-            EntityList = albums;
-        }
-
-        public IAlbumFilterBuilder ApplyIdFilter(AlbumId id)
-        {
-            EntityList = EntityList.Where(x => x.Id == id);
+            _filters.Add(_genericFilter.EqualsFilter(nameof(Album.Title), title));
             return this;
         }
 
-        public IAlbumFilterBuilder ApplyNameContainsFilter(string name)
+        public IAlbumFilterBuilder WithArtist(string artist)
         {
-            EntityList = EntityList.Where(x => x.Name.Contains(name));
+            _filters.Add(_genericFilter.EqualsFilter(nameof(Album.Artist), artist));
             return this;
         }
 
-        public IQueryable<Album> Build()
+        public IAlbumFilterBuilder WithPropertyEquals(string propertyName, object value)
         {
-            return EntityList;
+            _filters.Add(_genericFilter.EqualsFilter(propertyName, value));
+            return this;
+        }
+
+        public IAlbumFilterBuilder WithPropertyContains(string propertyName, string value)
+        {
+            _filters.Add(_genericFilter.ContainsFilter(propertyName, value));
+            return this;
+        }
+
+        public IAlbumFilterBuilder WithPropertyStartsWith(string propertyName, string value)
+        {
+            _filters.Add(_genericFilter.StartsWithFilter(propertyName, value));
+            return this;
+        }
+
+        public IAlbumFilterBuilder WithPropertyEndsWith(string propertyName, string value)
+        {
+            _filters.Add(_genericFilter.EndsWithFilter(propertyName, value));
+            return this;
+        }
+
+        public IAlbumFilterBuilder WithPropertyRegex(string propertyName, string pattern)
+        {
+            _filters.Add(_genericFilter.RegexFilter(propertyName, pattern));
+            return this;
+        }
+
+        public IAlbumFilterBuilder WithPropertyContainsDigits(string propertyName)
+        {
+            _filters.Add(_genericFilter.ContainsDigitsFilter(propertyName));
+            return this;
+        }
+
+        public IAlbumFilterBuilder Not(Func<Album, bool> filter)
+        {
+            _filters.Add(_genericFilter.NotFilter(filter));
+            return this;
+        }
+
+        public IEnumerable<Album> Apply(IEnumerable<Album> query)
+        {
+            foreach (var filter in _filters)
+            {
+                query = query.Where(filter);
+            }
+            return query;
         }
     }
 }
