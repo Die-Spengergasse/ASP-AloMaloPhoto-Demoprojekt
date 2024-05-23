@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Spg.AloMalo.Application.Services;
 using Spg.AloMalo.DomainModel.Commands;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Error;
@@ -22,7 +21,7 @@ namespace Spg.AloMalo.MvcFrontEnd.Controllers
         {
             // TODO: Liste laden
             ErrorCheck<IQueryable<AlbumDto>> data = _albumService.GetAllOk();
-            return View(data.Value);
+            return View(data.Value as IQueryable<Album>);
         }
 
         [HttpGet()]

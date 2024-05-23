@@ -1,12 +1,14 @@
-﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+﻿using Spg.AloMalo.DomainModel.Filter;
+using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class LastNameEndsWithParameter : IQueryParameter
+    public class NameEndsWithParameter : IQueryParameter
     {
         private readonly IPhotoFilterBuilder _photoFilterBuilder;
 
-        public LastNameEndsWithParameter(IPhotoFilterBuilder photoFilterBuilder)
+        public NameEndsWithParameter(IPhotoFilterBuilder photoFilterBuilder)
         {
             _photoFilterBuilder = photoFilterBuilder;
         }
@@ -19,7 +21,7 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             {
                 if (parts[1]?.Trim().ToLower() == "ew")
                 {
-                    return _photoFilterBuilder.ApplyNameEndsWithFilter(parts[2]);
+                    return _photoFilterBuilder.ApplyFilter(p => p.Name, parts[2], new EndsWithFilter<Photo>());
                 }
             }
             return _photoFilterBuilder;

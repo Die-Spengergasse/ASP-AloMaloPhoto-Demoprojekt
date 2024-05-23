@@ -1,6 +1,7 @@
 ﻿using Spg.AloMalo.DomainModel.Commands;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Exceptions;
+using Spg.AloMalo.DomainModel.Filter;
 using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
@@ -37,15 +38,21 @@ namespace Spg.AloMalo.Application.Services
         {
             IQueryable<PhotoDto> result = _readOnlyPhotoRepository
                 .FilterBuilder
-                .ApplyNameContainsFilter("My")
+                .ApplyFilter(p => p.Name, "My", new ContainsFilter<Photo>())
+                .ApplyFilter(p => p.Description, "beautiful", new ContainsFilter<Photo>())
+                .ApplyFilter(p => p.Orientation, "Landscape", new EqualsFilter<Photo, Orientations>())
+                .ApplyFilter(p => p.AiGenerated, "true", new EqualsFilter<Photo, bool>())
+                .ApplyFilter(p => p.Width, "1000", new GreaterThanFilter<Photo, int>())
+                .ApplyFilter(p => p.Height, "500", new LessThanOrEqualFilter<Photo, int>())
+                .ApplyFilter(p => p.ImageType, "Jpg,Png", new InFilter<Photo, ImageTypes>())
                 .Build()
-                    .Select(p => 
-                        new PhotoDto(
-                            p.Guid, 
-                            p.Name, 
-                            p.Description, 
-                            ImageTypesMapper.ToDto(p.ImageType), 
-                            OrientationsMapper.ToDto(p.Orientation)));
+                .Select(p =>
+                    new PhotoDto(
+                        p.Guid,
+                        p.Name,
+                        p.Description,
+                        ImageTypesMapper.ToDto(p.ImageType),
+                        OrientationsMapper.ToDto(p.Orientation)));
             return result;
         }
 
