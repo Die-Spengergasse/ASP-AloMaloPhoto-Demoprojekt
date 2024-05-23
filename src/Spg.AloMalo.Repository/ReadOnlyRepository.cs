@@ -1,21 +1,23 @@
 ﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.Infrastructure;
+using Spg.AloMalo.Repository.Builder;
 
 namespace Spg.AloMalo.Repository
 {
-    public class ReadOnlyRepository<TEntity, TFilterBilder>
-        : RepositoryBase<TEntity>, IReadOnlyRepository<TFilterBilder>
+    public class ReadOnlyRepository<TEntity, TFilterBuilder>
+        : RepositoryBase<TEntity>, IReadOnlyRepository<TEntity, TFilterBuilder>
         where TEntity : class
-        where TFilterBilder : IEntityFilterBuilder<TEntity>
+        where TFilterBuilder : class, IEntityFilterBuilder<TEntity>
     {
-        public TFilterBilder FilterBuilder { get; set; }
+
+        public IFilterBuilderBase<TEntity, TFilterBuilder> FilterBuilder { get; }
 
         public ReadOnlyRepository(
             PhotoContext photoContext,
-            TFilterBilder filterBuilder)
+            TFilterBuilder filterBuilder)
                 : base(photoContext)
         {
-            FilterBuilder = filterBuilder;
+            FilterBuilder = new FilterBuilderBase<TEntity, TFilterBuilder>(filterBuilder);
         }
     }
 }

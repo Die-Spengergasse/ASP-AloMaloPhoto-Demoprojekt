@@ -4,7 +4,7 @@ using Spg.AloMalo.Infrastructure;
 
 namespace Spg.AloMalo.Repository.Repositories
 {
-    public class PhotoRepository : ReadWriteRepository<Photo, IPhotoFilterBuilder, IPhotoUpdateBuilder>, 
+    public class PhotoRepository : ReadWriteRepository<Photo, IPhotoFilterBuilder, IPhotoUpdateBuilder>,
         IWritablePhotoRepository, IReadOnlyPhotoRepository
     {
         public PhotoRepository(PhotoContext photoContext,

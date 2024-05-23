@@ -5,6 +5,7 @@ using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Validators.RichTypes;
 using Spg.AloMalo.Infrastructure;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Spg.AloMalo.Repository
 {

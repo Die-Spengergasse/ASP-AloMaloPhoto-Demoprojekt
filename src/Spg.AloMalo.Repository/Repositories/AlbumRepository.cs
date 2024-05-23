@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Repository.Repositories
 {
-    public class AlbumRepository : ReadOnlyRepository<Album, IAlbumFilterBuilder>, 
+    public class AlbumRepository : ReadOnlyRepository<Album, IAlbumFilterBuilder>,
         IReadOnlyAlbumRepository
     {
         public AlbumRepository(PhotoContext photoContext,
             IAlbumFilterBuilder readBuilder)
                 : base(photoContext, readBuilder)
         { }
+
+        IAlbumFilterBuilder IReadOnlyAlbumRepository.FilterBuilder => (IAlbumFilterBuilder)FilterBuilder;
 
         public IQueryable<Album> GetAll()
         {

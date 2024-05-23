@@ -16,8 +16,7 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
         public Task<List<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
         {
             IPhotoFilterBuilder builder =
-                _photoRepository
-                .FilterBuilder;
+                (IPhotoFilterBuilder)_photoRepository.FilterBuilder;
 
             builder = new LastNameContainsParameter(builder)
                 .Compile(request.Query.Filter);
@@ -25,7 +24,19 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
                 .Compile(request.Query.Filter);
             builder = new LastNameEndsWithParameter(builder)
                 .Compile(request.Query.Filter);
-            // builder = new ...
+            builder = new EqualsParameter<string>(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new NotEqualsParameter<string>(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new StartsWithParameter(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new EndsWithParameter(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new ContainsParameter(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new RegexParameter(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new ContainsDigitsParameter(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new GreaterThanParameter<int>(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new LessThanParameter<int>(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new InParameter<string>(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new NotInParameter<string>(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new BetweenParameter<int>(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
+            builder = new DateRangeParameter(_photoRepository.FilterBuilder).Compile(request.Query.Filter);
 
             return Task.FromResult(
                 builder
@@ -36,3 +47,5 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
         }
     }
 }
+
+//_photoRepository.FilterBuilder

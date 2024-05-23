@@ -4,6 +4,6 @@ namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 {
     public interface IReadOnlyPhotoRepository : IRepositoryBase<Photo>
     {
-        IPhotoFilterBuilder FilterBuilder { get; }
+        IFilterBuilderBase<Photo, IPhotoFilterBuilder> FilterBuilder { get; }
     }
 }
