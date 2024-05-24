@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
@@ -19,13 +20,19 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
                 _photoRepository
                 .FilterBuilder;
 
-            builder = new LastNameContainsParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameBeginsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameEndsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            // builder = new ...
+            string[] filters = request.Query.Filter.Split(';');
+
+            foreach (var filter in filters)
+            {
+                string[] parts = filter.Split(' ');
+                if (parts.Length == 3)
+                {
+                    string property = parts[0];
+                    string operation = parts[1];
+                    string value = parts[2];
+                    builder = new PhotoPropertyFilter(builder, property, operation, value).Apply();
+                }
+            }
 
             return Task.FromResult(
                 builder
