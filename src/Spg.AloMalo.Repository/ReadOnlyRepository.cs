@@ -1,4 +1,6 @@
-﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+using Spg.AloMalo.DomainModel.Model;
 using Spg.AloMalo.Infrastructure;
 
 namespace Spg.AloMalo.Repository
@@ -8,6 +10,8 @@ namespace Spg.AloMalo.Repository
         where TEntity : class
         where TFilterBilder : IEntityFilterBuilder<TEntity>
     {
+        private readonly PhotoContext _context;
+
         public TFilterBilder FilterBuilder { get; set; }
 
         public ReadOnlyRepository(
@@ -16,6 +20,11 @@ namespace Spg.AloMalo.Repository
                 : base(photoContext)
         {
             FilterBuilder = filterBuilder;
+        }
+
+        public IQueryable<Photo> GetAllPhotos()
+        {
+            return _context.Photos;
         }
     }
 }
