@@ -1,47 +1,20 @@
 ﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
-using System.Linq.Expressions;
 
 namespace Spg.AloMalo.Repository.Builder
 {
     public class PhotoFilterBuilder : IPhotoFilterBuilder
     {
         public IQueryable<Photo> EntityList { get; set; }
-        private readonly List<IFilter<Photo>> _filters = new();
-        private readonly List<Expression<Func<Photo, bool>>> _filterExpressions = new();
 
         public PhotoFilterBuilder(IQueryable<Photo> photos)
         {
             EntityList = photos;
         }
 
-        //public IQueryable<Photo> Build()
-        //{
-        //    return EntityList;
-        //}
-
         public IQueryable<Photo> Build()
         {
-            var filteredPhotos = EntityList;
-
-            foreach (var filter in _filters)
-            {
-                filteredPhotos = filteredPhotos.Where(photo => filter.Apply(photo)).AsQueryable();
-            }
-
-            return filteredPhotos;
-        }
-
-        public IPhotoFilterBuilder ApplyFilter(IFilter<Photo> filter)
-        {
-            _filters.Add(filter);
-            return this;
-        }
-
-        public IPhotoFilterBuilder ApplyExpression(Expression<Func<Photo, bool>> filterExpression)
-        {
-            _filterExpressions.Add(filterExpression);
-            return this;
+            return EntityList;
         }
 
         public IPhotoFilterBuilder ApplyIdFilter(PhotoId id)
