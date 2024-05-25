@@ -11,7 +11,7 @@ namespace Spg.AloMalo.Repository.Builder
     {
         public IQueryable<Photo> EntityList { get; set; }
         private readonly List<Expression<Func<Photo, bool>>> _filterExpressions = new();
-        private PhotoContext _context;
+        private PhotoContext? _context;
 
         public PhotoFilterBuilder(IQueryable<Photo> photos)
         {
