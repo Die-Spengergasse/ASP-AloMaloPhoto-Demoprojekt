@@ -1,6 +1,13 @@
 ﻿using MediatR;
 using Spg.AloMalo.DomainModel.Dtos;
+using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+using Spg.AloMalo.DomainModel.Model;
+using Spg.AloMalo.DomainModel.Queries;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
@@ -15,24 +22,62 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 
         public Task<List<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
         {
-            IPhotoFilterBuilder builder =
-                _photoRepository
-                .FilterBuilder;
+            IPhotoFilterBuilder builder = _photoRepository.FilterBuilder;
 
-            builder = new LastNameContainsParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameBeginsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameEndsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            // builder = new ...
+            var filters = ParseFilters(request.Query.Filter);
 
-            return Task.FromResult(
-                builder
-                .Build()
-                .Select(p => p.ToDto())
-                .ToList()
-            );
+            foreach (var filter in filters)
+            {
+                builder = builder.ApplyFilter(filter);
+            }
+
+            var filteredPhotos = builder.Build().ToList();
+            return Task.FromResult(filteredPhotos.Select(p => p.ToDto()).ToList());
+        }
+
+        private IEnumerable<IFilter<Photo>> ParseFilters(string filterQuery)
+        {
+            var filters = new List<IFilter<Photo>>();
+
+            if (string.IsNullOrWhiteSpace(filterQuery))
+                return filters;
+
+            var parts = filterQuery.Split(' ');
+
+            for (int i = 0; i < parts.Length; i += 3)
+            {
+                if (i + 2 >= parts.Length)
+                {
+                    continue;
+                }
+
+                var property = parts[i]?.Trim();
+                var operation = parts[i + 1]?.Trim().ToLower();
+                var value = parts[i + 2]?.Trim();
+
+                if (string.IsNullOrEmpty(property) || string.IsNullOrEmpty(operation) || string.IsNullOrEmpty(value))
+                {
+                    continue;
+                }
+
+                switch (operation)
+                {
+                    case "eq":
+                        filters.Add(new EqualsFilter<Photo>(property, value));
+                        break;
+                    case "ct":
+                        filters.Add(new ContainsFilter<Photo>(property, value));
+                        break;
+                    case "bw":
+                        filters.Add(new StartsWithFilter<Photo>(property, value));
+                        break;
+                    case "ew":
+                        filters.Add(new EndsWithFilter<Photo>(property, value));
+                        break;
+                }
+            }
+
+            return filters;
         }
     }
 }

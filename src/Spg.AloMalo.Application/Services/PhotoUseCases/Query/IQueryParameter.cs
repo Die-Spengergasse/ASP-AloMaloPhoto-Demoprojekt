@@ -9,6 +9,6 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
     public interface IQueryParameter
     {
-        IPhotoFilterBuilder Compile(string queryParameter);
+        IPhotoFilterBuilder Compile(IPhotoFilterBuilder builder, string queryParameter);
     }
 }
