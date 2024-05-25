@@ -9,6 +9,12 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
     {
         private readonly IReadOnlyPhotoRepository _photoRepository;
 
+        private readonly string[] _requestOperationsWithTwoFilterParts =
+        {
+            "containsspecialchars",
+            "containsdigits"
+        };
+
         public GetPhotosQueryHandler(IReadOnlyPhotoRepository photoRepository)
         {
             _photoRepository = photoRepository;
@@ -20,18 +26,21 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
                 _photoRepository
                 .FilterBuilder;
 
-            string[] filters = request.Query.Filter.Split(';');
+            string filter = request.Query.Filter;
+            string[] parts = filter.Split(' ');
 
-            foreach (var filter in filters)
+            if (parts.Length == 3){
+                string property = parts[0].Trim();
+                string operation = parts[1].Trim();
+                string value = parts[2].Trim();
+                builder = new PhotoPropertyFilter(builder, property, operation, value).Apply();
+            }
+            else if(parts.Length == 2 && _requestOperationsWithTwoFilterParts.Contains(parts[1]))   // parts[1] = operation;
+                                                                                                    // if the operation is in _requestOperationsWithTwoFilterParts there are only two parts
             {
-                string[] parts = filter.Split(' ');
-                if (parts.Length == 3)
-                {
-                    string property = parts[0];
-                    string operation = parts[1];
-                    string value = parts[2];
-                    builder = new PhotoPropertyFilter(builder, property, operation, value).Apply();
-                }
+                string property = parts[0].Trim();
+                string operation = parts[1].Trim();
+                builder = new PhotoPropertyFilter(builder, property, operation, null!).Apply();
             }
 
             return Task.FromResult(

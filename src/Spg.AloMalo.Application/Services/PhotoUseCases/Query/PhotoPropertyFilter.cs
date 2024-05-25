@@ -41,9 +41,11 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
                 case "greaterthanequal":
                     return _photoFilterBuilder.ApplyGreaterThanOrEqualFilter(_propertyName, _value);
                 case "lt":
+                    return _photoFilterBuilder.ApplyLessThanFilter(_propertyName, _value);
                 case "lessthan":
                     return _photoFilterBuilder.ApplyLessThanFilter(_propertyName, _value);
                 case "lte":
+                    return _photoFilterBuilder.ApplyLessThanOrEqualFilter(_propertyName, _value);
                 case "lessthanequal":
                     return _photoFilterBuilder.ApplyLessThanOrEqualFilter(_propertyName, _value);
                 case "containsspecialchars":
