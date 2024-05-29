@@ -1,4 +1,5 @@
-﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+﻿using System.Linq.Expressions;
+using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.Repository.Builder
@@ -17,34 +18,10 @@ namespace Spg.AloMalo.Repository.Builder
             return EntityList;
         }
 
-        public IPhotoFilterBuilder ApplyIdFilter(PhotoId id)
+        public IPhotoFilterBuilder ApplyFilter<TProperty>(Expression<Func<Photo, TProperty>> propertySelector, string value, IFilterOperation<Photo, TProperty> filterOperation)
         {
-            EntityList = EntityList.Where(x => x.Id == id);
-            return this;
-        }
-        public IPhotoFilterBuilder ApplyNameContainsFilter(string name)
-        {
-            EntityList = EntityList.Where(x => x.Name.Contains(name));
-            return this;
-        }
-        public IPhotoFilterBuilder ApplyNameBeginsWithFilter(string name)
-        {
-            EntityList = EntityList.Where(x => x.Name.StartsWith(name));
-            return this;
-        }
-        public IPhotoFilterBuilder ApplyNameEndsWithFilter(string name)
-        {
-            EntityList = EntityList.Where(x => x.Name.EndsWith(name));
-            return this;
-        }
-        public IPhotoFilterBuilder ApplyOrientationFilter(Orientations orientation)
-        {
-            EntityList = EntityList.Where(x => x.Orientation == orientation);
-            return this;
-        }
-        public IPhotoFilterBuilder ApplyAiFilter(bool @is)
-        {
-            EntityList = EntityList.Where(x => x.AiGenerated == @is);
+            var filterExpression = filterOperation.Apply(propertySelector, value);
+            EntityList = EntityList.Where(filterExpression);
             return this;
         }
     }

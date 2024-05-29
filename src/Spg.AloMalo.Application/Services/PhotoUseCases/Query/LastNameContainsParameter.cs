@@ -1,17 +1,19 @@
-﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+﻿using Spg.AloMalo.DomainModel.Filter;
+using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class LastNameContainsParameter : IQueryParameter
+    public class NameContainsParameter : IQueryParameter
     {
         private readonly IPhotoFilterBuilder _photoFilterBuilder;
 
-        public LastNameContainsParameter(IPhotoFilterBuilder photoFilterBuilder)
+        public NameContainsParameter(IPhotoFilterBuilder photoFilterBuilder)
         {
             _photoFilterBuilder = photoFilterBuilder;
         }
 
-        public IPhotoFilterBuilder Compile(string queryParameter)
+        public IPhotoFilterBuilder Compile(string queryParameter, IPhotoFilterBuilder builder)
         {
             string[] parts = queryParameter.Split(' ');
             //TODO: Checks...
@@ -19,10 +21,10 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             {
                 if (parts[1]?.Trim().ToLower() == "ct")
                 {
-                    return _photoFilterBuilder.ApplyNameContainsFilter(parts[2]);
+                    return builder.ApplyFilter(p => p.Name, parts[2], new ContainsFilter<Photo>());
                 }
             }
-            return _photoFilterBuilder;
+            return builder;
         }
     }
 }
