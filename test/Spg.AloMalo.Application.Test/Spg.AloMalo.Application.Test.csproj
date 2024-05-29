@@ -26,6 +26,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Spg.AloMalo.Application\Spg.AloMalo.Application.csproj" />
     <ProjectReference Include="..\..\src\Spg.AloMalo.DomainModel\Spg.AloMalo.DomainModel.csproj" />
+    <ProjectReference Include="..\..\src\Spg.AloMalo.Infrastructure\Spg.AloMalo.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Spg.AloMalo.Repository\Spg.AloMalo.Repository.csproj" />
+    <ProjectReference Include="..\Spg.AloMalo.DomainModel.Test\Spg.AloMalo.DomainModel.Test.csproj" />
   </ItemGroup>
 
 </Project>

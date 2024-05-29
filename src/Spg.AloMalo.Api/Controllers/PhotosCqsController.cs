@@ -1,13 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spg.AloMalo.Application.Services.PhotoUseCases.Query;
 using Spg.AloMalo.DomainModel.Commands;
 using Spg.AloMalo.DomainModel.Dtos;
-using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Queries;
-using static Bogus.DataSets.Name;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Spg.AloMalo.Api.Controllers
 {
@@ -26,9 +22,10 @@ namespace Spg.AloMalo.Api.Controllers
         [HttpGet()]
         public IActionResult GetFiltered([FromQuery] GetPhotosQuery query)
         {
-            var result = _mediator.Send(
-                new GetPhotosQueryModel(query)
-            );
+            List<PhotoDto> result = _mediator
+                .Send(new GetPhotosQueryModel(query))
+                .Result
+                .ToList();
             return Ok(result);
         }
 

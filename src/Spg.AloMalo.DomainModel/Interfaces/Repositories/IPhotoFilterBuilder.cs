@@ -4,12 +4,17 @@ namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 {
     public interface IPhotoFilterBuilder : IEntityFilterBuilder<Photo>
     {
-        IPhotoFilterBuilder ApplyIdFilter(PhotoId id);
-        IPhotoFilterBuilder ApplyNameContainsFilter(string filter);
-        IPhotoFilterBuilder ApplyNameBeginsWithFilter(string filter);
-        IPhotoFilterBuilder ApplyNameEndsWithFilter(string filter);
-        IPhotoFilterBuilder ApplyOrientationFilter(Orientations orientation);
-        IPhotoFilterBuilder ApplyAiFilter(bool @is);
-        //IPhotoFilterBuilder ApplyPaging(int page, int size);
+        IQueryable<Photo> EntityList { get; set; }
+        IPhotoFilterBuilder ApplyFilter(IFilter<Photo> filter);
+        IQueryable<Photo> Build();
+        IPhotoFilterBuilder ApplyWidthGreaterThanFilter(int start);
+        IPhotoFilterBuilder ApplyWidthGreaterThanEqualFilter(int start);
+        IPhotoFilterBuilder ApplyWidthLowerThanFilter(int start);
+        IPhotoFilterBuilder ApplyWidthLowerThanEqualFilter(int start);
+        IPhotoFilterBuilder ApplyNameContainsFilter(string namePart);
+        IPhotoFilterBuilder ApplyDescriptionContainsFilter(string namePart);
+        IPhotoFilterBuilder ApplyNameStartsWithFilter(string namePart);
+        IPhotoFilterBuilder ApplyDescriptionStartsWithFilter(string namePart);
+        IPhotoFilterBuilder ApplyCreationTimeStampBetweenFilter(DateTime start, DateTime end);
     }
 }

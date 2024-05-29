@@ -1,10 +1,13 @@
-﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+﻿using Spg.AloMalo.DomainModel.Interfaces;
+using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.Repository.Builder
 {
     public class PhotoFilterBuilder : IPhotoFilterBuilder
     {
+        private readonly List<IFilter<Photo>> _filters = new();
+
         public IQueryable<Photo> EntityList { get; set; }
 
         public PhotoFilterBuilder(IQueryable<Photo> photos)
@@ -12,40 +15,79 @@ namespace Spg.AloMalo.Repository.Builder
             EntityList = photos;
         }
 
-        public IQueryable<Photo> Build()
+        public IPhotoFilterBuilder ApplyFilter(IFilter<Photo> filter)
         {
-            return EntityList;
+            _filters.Add(filter);
+            return this;
         }
 
-        public IPhotoFilterBuilder ApplyIdFilter(PhotoId id)
+        public IQueryable<Photo> Build()
         {
-            EntityList = EntityList.Where(x => x.Id == id);
+            var query = EntityList;
+            foreach (var filter in _filters)
+            {
+                query = filter.Apply(query);
+            }
+            return query;
+        }
+
+        public IPhotoFilterBuilder ApplyWidthGreaterThanFilter(int start)
+        {
+            EntityList = EntityList.Where(x => x.Width > start);
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameContainsFilter(string name)
+
+        public IPhotoFilterBuilder ApplyWidthGreaterThanEqualFilter(int start)
         {
-            EntityList = EntityList.Where(x => x.Name.Contains(name));
+            EntityList = EntityList.Where(x => x.Width >= start);
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameBeginsWithFilter(string name)
+
+        public IPhotoFilterBuilder ApplyWidthLowerThanFilter(int start)
         {
-            EntityList = EntityList.Where(x => x.Name.StartsWith(name));
+            EntityList = EntityList.Where(x => x.Width < start);
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameEndsWithFilter(string name)
+
+        public IPhotoFilterBuilder ApplyWidthLowerThanEqualFilter(int start)
         {
-            EntityList = EntityList.Where(x => x.Name.EndsWith(name));
+            EntityList = EntityList.Where(x => x.Width <= start);
             return this;
         }
-        public IPhotoFilterBuilder ApplyOrientationFilter(Orientations orientation)
+
+        public IPhotoFilterBuilder ApplyNameContainsFilter(string namePart)
         {
-            EntityList = EntityList.Where(x => x.Orientation == orientation);
+            EntityList = EntityList.Where(x => x.Name.Trim().ToLower()
+                            .Contains(namePart.Trim().ToLower()));
             return this;
         }
-        public IPhotoFilterBuilder ApplyAiFilter(bool @is)
+
+        public IPhotoFilterBuilder ApplyDescriptionContainsFilter(string namePart)
         {
-            EntityList = EntityList.Where(x => x.AiGenerated == @is);
+            EntityList = EntityList.Where(x => x.Description.Trim().ToLower()
+                            .Contains(namePart.Trim().ToLower()));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyNameStartsWithFilter(string namePart)
+        {
+            EntityList = EntityList.Where(x => x.Name.Trim().ToLower()
+                .StartsWith(namePart.Trim().ToLower()));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyDescriptionStartsWithFilter(string namePart)
+        {
+            EntityList = EntityList.Where(x => x.Description.Trim().ToLower()
+                .StartsWith(namePart.Trim().ToLower()));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyCreationTimeStampBetweenFilter(DateTime start, DateTime end)
+        {
+            EntityList = EntityList.Where(x => x.CreationTimeStamp > start && x.CreationTimeStamp < end);
             return this;
         }
     }
+
 }
