@@ -1,6 +1,7 @@
-﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+﻿using Spg.AloMalo.Application.Services.PhotoUseCases.Query;
+using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 
-namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
+namespace Spg.AloMalo.Application.Services.PhotoUseCases.Filters
 {
     public class LastNameBeginsWithParameter : IQueryParameter
     {

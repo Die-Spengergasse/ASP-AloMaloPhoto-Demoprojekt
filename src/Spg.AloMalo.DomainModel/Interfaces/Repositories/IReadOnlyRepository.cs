@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
 {
-    public interface IReadOnlyRepository<TReadBilder>
+    public interface IReadOnlyRepository<TEntity, TFilterBuilder>
+        where TEntity : class
+        where TFilterBuilder : class, IEntityFilterBuilder<TEntity>
     {
-        TReadBilder FilterBuilder { get; set; }
+        IFilterBuilderBase<TEntity, TFilterBuilder> FilterBuilder { get; }
     }
 }

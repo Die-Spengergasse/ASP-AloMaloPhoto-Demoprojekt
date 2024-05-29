@@ -35,8 +35,8 @@ namespace Spg.AloMalo.Application.Services
 
         public IQueryable<PhotoDto> GetPhotos()
         {
-            IQueryable<PhotoDto> result = _readOnlyPhotoRepository
-                .FilterBuilder
+            IPhotoFilterBuilder photoFilterBuilder = (IPhotoFilterBuilder)_readOnlyPhotoRepository.FilterBuilder;
+            IQueryable<PhotoDto> result = photoFilterBuilder
                 .ApplyNameContainsFilter("My")
                 .Build()
                     .Select(p => 
@@ -132,7 +132,6 @@ namespace Spg.AloMalo.Application.Services
             _writablePhotoRepository.UpdateBuilder
                 .WithEntity(foundEntity)
                 .Save();
-
             // ohne Repository-Pattern
             // (Achtung!! keine Referenz zu Repository, wegen Clean Architecture)
             //_dbContext

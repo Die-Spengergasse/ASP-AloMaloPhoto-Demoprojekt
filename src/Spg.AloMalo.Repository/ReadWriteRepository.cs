@@ -4,17 +4,17 @@ using Spg.AloMalo.Repository.Builder;
 
 namespace Spg.AloMalo.Repository
 {
-    public class ReadWriteRepository<TEntity, TFilterBilder, TUpdateBuilder> 
-        : ReadOnlyRepository<TEntity, TFilterBilder>, IReadWriteRepository<TEntity, TUpdateBuilder>
+    public class ReadWriteRepository<TEntity, TFilterBuilder, TUpdateBuilder> 
+        : ReadOnlyRepository<TEntity, TFilterBuilder>, IReadWriteRepository<TEntity, TUpdateBuilder>
         where TEntity : class
-        where TFilterBilder : class, IEntityFilterBuilder<TEntity>
+        where TFilterBuilder : class, IEntityFilterBuilder<TEntity>
         where TUpdateBuilder : class, IEntityUpdateBuilder<TEntity>
     {
         public IUpdateBuilderBase<TEntity, TUpdateBuilder> UpdateBuilder { get; }
 
         public ReadWriteRepository(
             PhotoContext photoContext,
-            TFilterBilder filterBuilder,
+            TFilterBuilder filterBuilder,
             TUpdateBuilder updateBuilder)
                 : base(photoContext, filterBuilder)
         {
