@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Spg.AloMalo.Application.Services.PhotoUseCases.Query;
 using Spg.AloMalo.DomainModel.Commands;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Interfaces;
+using Spg.AloMalo.DomainModel.Queries;
 using System.Net.Http.Headers;
 
 namespace Spg.AloMalo.Api.Controllers
@@ -137,5 +139,14 @@ namespace Spg.AloMalo.Api.Controllers
             //_photoService.Delete(null!); // TODO: Implementation
             return Ok();
         }
+        //*[HttpGet()]
+        public IActionResult Get([FromQuery()] GetPhotosQueryHandler query)
+        {
+            List<PhotoDto> data = _photoService
+                .Send(new GetPhotosQueryModel(query))
+                .Result.ToList();
+        }
+
+
     }
 }
