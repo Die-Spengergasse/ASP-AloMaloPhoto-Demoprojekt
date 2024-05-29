@@ -11,28 +11,30 @@ namespace Spg.AloMalo.Repository.Builder
 {
     public class AlbumFilterBuilder : IEntityFilterBuilder<Album>, IAlbumFilterBuilder
     {
-        public IQueryable<Album> EntityList { get; set; }
+        private readonly List<IFilterOperation<Album>> _filters = new();
 
         public AlbumFilterBuilder(IQueryable<Album> albums)
         {
             EntityList = albums;
         }
 
+        public IQueryable<Album> EntityList { get; set; }
+
         public IAlbumFilterBuilder ApplyIdFilter(AlbumId id)
         {
-            EntityList = EntityList.Where(x => x.Id == id);
+            _filters.Add(new EqualsFilter<Album>("Id", id.ToString()));
             return this;
         }
 
         public IAlbumFilterBuilder ApplyNameContainsFilter(string name)
         {
-            EntityList = EntityList.Where(x => x.Name.Contains(name));
+            _filters.Add(new ContainsFilter<Album>("Name", name));
             return this;
         }
 
         public IQueryable<Album> Build()
         {
-            return EntityList;
+            return _filters.Aggregate(EntityList, (current, filter) => filter.Apply(current));
         }
     }
 }
