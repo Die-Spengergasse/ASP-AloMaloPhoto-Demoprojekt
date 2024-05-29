@@ -25,9 +25,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Spg.AloMalo.Api\Spg.AloMalo.Api.csproj" />
+    <ProjectReference Include="..\..\src\Spg.AloMalo.Application\Spg.AloMalo.Application.csproj" />
     <ProjectReference Include="..\..\src\Spg.AloMalo.DomainModel\Spg.AloMalo.DomainModel.csproj" />
     <ProjectReference Include="..\..\src\Spg.AloMalo.Infrastructure\Spg.AloMalo.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Spg.AloMalo.MvcFrontEnd\Spg.AloMalo.MvcFrontEnd.csproj" />
+    <ProjectReference Include="..\..\src\Spg.AloMalo.Repository\Spg.AloMalo.Repository.csproj" />
+    <ProjectReference Include="..\..\src\Spg.General.IdentityProvider\Spg.General.IdentityProvider.csproj" />
+    <ProjectReference Include="..\Spg.AloMalo.Application.Test\Spg.AloMalo.Application.Test.csproj" />
+    <ProjectReference Include="..\Spg.AloMalo.DomainModel.Test\Spg.AloMalo.DomainModel.Test.csproj" />
     <ProjectReference Include="..\Spg.AloMalo.MockMvc\Spg.AloMalo.MockMvc.csproj" />
+    <ProjectReference Include="..\Spg.AloMalo.Repository.Test\Spg.AloMalo.Repository.Test.csproj" />
   </ItemGroup>
 
 </Project>
