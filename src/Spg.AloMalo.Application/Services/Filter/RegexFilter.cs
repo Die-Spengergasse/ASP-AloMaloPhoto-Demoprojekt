@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 
@@ -11,23 +12,28 @@ namespace Spg.AloMalo.Application.Services.Filter
             var parameter = Expression.Parameter(typeof(T), "x");
             var property = Expression.Property(parameter, propertyName);
 
-            var regexExpression = Expression.Call(
-                typeof(Regex).GetMethod("IsMatch", new[] { typeof(string), typeof(string) }),
-                property, Expression.Constant(value)
-            );
-
-            if (typeof(IEnumerable).IsAssignableFrom(property.Type))
+            if (typeof(IEnumerable).IsAssignableFrom(property.Type) && property.Type != typeof(string))
             {
+                var elementType = property.Type.IsArray ? property.Type.GetElementType() : property.Type.GetGenericArguments()[0];
+                var regexIsMatchMethod = typeof(Regex).GetMethod("IsMatch", new[] { typeof(string), typeof(string) });
+
+                var lambdaParameter = Expression.Parameter(elementType, "y");
+                var lambdaBody = Expression.Call(regexIsMatchMethod, lambdaParameter, Expression.Constant(value));
+                var lambda = Expression.Lambda<Func<string, bool>>(lambdaBody, lambdaParameter);
+
                 var anyMethod = typeof(Enumerable).GetMethods()
                     .First(m => m.Name == "Any" && m.GetParameters().Length == 2)
-                    .MakeGenericMethod(property.Type.GetGenericArguments()[0]);
+                    .MakeGenericMethod(elementType);
 
-                var anyCall = Expression.Call(anyMethod, property, Expression.Lambda(regexExpression, parameter));
+                var anyCall = Expression.Call(anyMethod, property, lambda);
+
                 return Expression.Lambda<Func<T, bool>>(anyCall, parameter);
             }
             else
             {
-                return Expression.Lambda<Func<T, bool>>(regexExpression, parameter);
+                var regexIsMatchMethod = typeof(Regex).GetMethod("IsMatch", new[] { typeof(string), typeof(string) });
+                var regexIsMatchCall = Expression.Call(regexIsMatchMethod, property, Expression.Constant(value));
+                return Expression.Lambda<Func<T, bool>>(regexIsMatchCall, parameter);
             }
         }
     }
