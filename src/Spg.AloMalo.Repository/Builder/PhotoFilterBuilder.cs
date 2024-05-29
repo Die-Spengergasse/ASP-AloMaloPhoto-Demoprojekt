@@ -27,7 +27,7 @@ namespace Spg.AloMalo.Repository.Builder
             EntityList = EntityList.Where(x => x.Name.Contains(name));
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameBeginsWithFilter(string name)
+        public IPhotoFilterBuilder ApplyNameStartsWithFilter(string name)
         {
             EntityList = EntityList.Where(x => x.Name.StartsWith(name));
             return this;

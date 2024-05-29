@@ -19,7 +19,7 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             {
                 if (parts[1]?.Trim().ToLower() == "bw")
                 {
-                    return _photoFilterBuilder.ApplyNameBeginsWithFilter(parts[2]);
+                    return _photoFilterBuilder.ApplyNameStartsWithFilter(parts[2]);
                 }
             }
             return _photoFilterBuilder;

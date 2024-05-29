@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Spg.AloMalo.Application.Operations;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class GetPhotosQueryHandler : IRequestHandler<GetPhotosQueryModel, List<PhotoDto>>
+    public class GetPhotosQueryHandler : IRequestHandler<GetPhotosQueryModel, IQueryable<PhotoDto>>
     {
         private readonly IReadOnlyPhotoRepository _photoRepository;
 
@@ -13,26 +14,23 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             _photoRepository = photoRepository;
         }
 
-        public Task<List<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
+        public Task<IQueryable<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
         {
             IPhotoFilterBuilder builder =
                 _photoRepository
                 .FilterBuilder;
 
-            builder = new LastNameContainsParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameBeginsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameEndsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            // builder = new ...
+            builder = new FilterContainsOperations(builder).Compile(request.Query.Filter);
+            builder = new FilterStartsWithOperations(builder).Compile(request.Query.Filter);
+            builder = new FilterEndsWithOperations(builder).Compile(request.Query.Filter);
+            builder = new FilterStartsWithOperations(builder).Compile(request.Query.Filter);
 
-            return Task.FromResult(
-                builder
-                .Build()
-                .Select(p => p.ToDto())
-                .ToList()
-            );
+
+            var result = builder.Build().Select(r => r.ToDto());
+
+            return Task.FromResult(result);
         }
+
+        
     }
 }
