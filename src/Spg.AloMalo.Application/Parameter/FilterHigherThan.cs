@@ -1,23 +1,22 @@
 ﻿using System;
+using Spg.AloMalo.Application;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.Application.Parameter
 {
-    public class FilterStartsWith : InterpretParameterBase<Photo>, IQueryParameter
+	public class FilterHigherThan : InterpretParameterBase<Photo>, IQueryParameter
     {
         private readonly IPhotoFilterBuilder _photoFilterBuilder;
-        public FilterStartsWith(IPhotoFilterBuilder photoFilterBuilder) : base("sw")
+        public FilterHigherThan(IPhotoFilterBuilder photoFilterBuilder) : base("ht")
         {
             _photoFilterBuilder = photoFilterBuilder;
         }
         public IPhotoFilterBuilder Compile(string? queryParameter)
         {
-            ForProperty(queryParameter, p => p.Name).Use<string>(_photoFilterBuilder.ApplyNameBeginsWithFilter);
-            ForProperty(queryParameter, p => p.Description).Use<string>(_photoFilterBuilder.ApplyDescriptionStartsFilter);
+            ForProperty(queryParameter, p => p.Height).Use<int>(_photoFilterBuilder.ApplyHightHigherThan);
 
             return _photoFilterBuilder;
         }
     }
 }
-

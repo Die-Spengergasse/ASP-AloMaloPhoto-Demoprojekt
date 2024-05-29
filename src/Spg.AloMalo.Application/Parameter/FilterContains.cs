@@ -16,6 +16,7 @@ namespace Spg.AloMalo.Application.Parameter
 		public IPhotoFilterBuilder Compile(string? queryParameter)
 		{
 			ForProperty(queryParameter, p => p.Name).Use<string>(_photoFilterBuilder.ApplyNameContainsFilter);
+            ForProperty(queryParameter, p => p.Description).Use<string>(_photoFilterBuilder.ApplyDescriptionContainsFilter);
 
             return _photoFilterBuilder;
 		}

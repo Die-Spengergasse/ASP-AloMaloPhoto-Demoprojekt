@@ -24,6 +24,11 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             builder = new FilterContains(builder).Compile(request.Query.Filter);
             builder = new FilterEndsWith(builder).Compile(request.Query.Filter);
             builder = new FilterStartsWith(builder).Compile(request.Query.Filter);
+            builder = new FilterHigherThan(builder).Compile(request.Query.Filter);
+            builder = new FilterHigherThanEquals(builder).Compile(request.Query.Filter);
+            builder = new FilterEquals(builder).Compile(request.Query.Filter);
+            builder = new FilterLowerThanEquals(builder).Compile(request.Query.Filter);
+            builder = new FilterLowerThan(builder).Compile(request.Query.Filter);
 
             return Task.FromResult(
                 builder
