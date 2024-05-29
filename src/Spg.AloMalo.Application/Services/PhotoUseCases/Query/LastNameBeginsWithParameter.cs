@@ -13,7 +13,7 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             _photoFilterBuilder = photoFilterBuilder;
         }
 
-        public IPhotoFilterBuilder Compile(string queryParameter)
+        public IPhotoFilterBuilder Compile(string queryParameter, IPhotoFilterBuilder builder)
         {
             string[] parts = queryParameter.Split(' ');
             //TODO: Checks...
@@ -21,10 +21,10 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             {
                 if (parts[1]?.Trim().ToLower() == "bw")
                 {
-                    return _photoFilterBuilder.ApplyFilter(p => p.Name, parts[2], new StartsWithFilter<Photo>());
+                    return builder.ApplyFilter(p => p.Name, parts[2], new StartsWithFilter<Photo>());
                 }
             }
-            return _photoFilterBuilder;
+            return builder;
         }
     }
 }
