@@ -1,11 +1,18 @@
 ﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
+using Spg.AloMalo.Repository.Repositories;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Spg.AloMalo.Repository.Builder
 {
     public class PhotoFilterBuilder : IPhotoFilterBuilder
     {
         public IQueryable<Photo> EntityList { get; set; }
+
+        private readonly List<Expression<Func<Photo, bool>>> _conditions = new List<Expression<Func<Photo, bool>>>();
 
         public PhotoFilterBuilder(IQueryable<Photo> photos)
         {
@@ -14,38 +21,86 @@ namespace Spg.AloMalo.Repository.Builder
 
         public IQueryable<Photo> Build()
         {
-            return EntityList;
+            var query = EntityList;
+            foreach (var condition in _conditions)
+            {
+                query = query.Where(condition);
+            }
+            return query;
         }
 
-        public IPhotoFilterBuilder ApplyIdFilter(PhotoId id)
+        public IPhotoFilterBuilder ApplyEqualsFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.Id == id);
+            _conditions.Add(BuildStringComparisonExpression(propertyName, value, nameof(string.Equals)));
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameContainsFilter(string name)
+
+        public IPhotoFilterBuilder ApplyContainsFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.Name.Contains(name));
+            _conditions.Add(BuildStringComparisonExpression(propertyName, value, nameof(string.Contains)));
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameBeginsWithFilter(string name)
+
+        public IPhotoFilterBuilder ApplyStartsWithFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.Name.StartsWith(name));
+            _conditions.Add(BuildStringComparisonExpression(propertyName, value, nameof(string.StartsWith)));
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameEndsWithFilter(string name)
+
+        public IPhotoFilterBuilder ApplyEndsWithFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.Name.EndsWith(name));
+            _conditions.Add(BuildStringComparisonExpression(propertyName, value, nameof(string.EndsWith)));
             return this;
         }
-        public IPhotoFilterBuilder ApplyOrientationFilter(Orientations orientation)
+
+        public IPhotoFilterBuilder ApplyGreaterThanFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.Orientation == orientation);
+            _conditions.Add(BuildNumericComparisonExpression(propertyName, value, ExpressionType.GreaterThan));
             return this;
         }
-        public IPhotoFilterBuilder ApplyAiFilter(bool @is)
+
+        public IPhotoFilterBuilder ApplyGreaterThanOrEqualFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.AiGenerated == @is);
+            _conditions.Add(BuildNumericComparisonExpression(propertyName, value, ExpressionType.GreaterThanOrEqual));
             return this;
+        }
+
+        public IPhotoFilterBuilder ApplyLessThanFilter(string propertyName, string value)
+        {
+            _conditions.Add(BuildNumericComparisonExpression(propertyName, value, ExpressionType.LessThan));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyLessThanOrEqualFilter(string propertyName, string value)
+        {
+            _conditions.Add(BuildNumericComparisonExpression(propertyName, value, ExpressionType.LessThanOrEqual));
+            return this;
+        }
+
+        private Expression<Func<Photo, bool>> BuildStringComparisonExpression(string propertyName, string value, string methodName)
+        {
+            var paramExpr = Expression.Parameter(typeof(Photo), "photo");
+            var propertyExpr = Expression.Property(paramExpr, propertyName);
+            var valueExpr = Expression.Constant(value, typeof(string));
+            var comparisonMethod = typeof(string).GetMethod(methodName, new[] { typeof(string), typeof(StringComparison) });
+            var methodCallExpr = Expression.Call(propertyExpr, comparisonMethod, valueExpr, Expression.Constant(StringComparison.OrdinalIgnoreCase));
+
+            return Expression.Lambda<Func<Photo, bool>>(methodCallExpr, paramExpr);
+        }
+
+        private Expression<Func<Photo, bool>> BuildNumericComparisonExpression(string propertyName, string value, ExpressionType comparisonType)
+        {
+            if (decimal.TryParse(value, out var decimalValue))
+            {
+                var paramExpr = Expression.Parameter(typeof(Photo), "photo");
+                var propertyExpr = Expression.Property(paramExpr, propertyName);
+                var decimalExpr = Expression.Constant(decimalValue);
+                var convertExpr = Expression.Convert(propertyExpr, typeof(decimal?));
+                var comparisonExpr = Expression.MakeBinary(comparisonType, convertExpr, decimalExpr);
+
+                return Expression.Lambda<Func<Photo, bool>>(comparisonExpr, paramExpr);
+            }
+            throw new ArgumentException("Value provided is not a valid decimal.", nameof(value));
         }
     }
 }
