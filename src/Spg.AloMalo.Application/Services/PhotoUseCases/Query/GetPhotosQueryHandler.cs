@@ -26,6 +26,16 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             builder = new LastNameEndsWithParameter(builder)
                 .Compile(request.Query.Filter);
             // builder = new ...
+            string filter = request.Query.Filter;
+            string[] parts = filter.Split(' ');
+
+            if (parts.Length == 3)
+            {
+                string property = parts[0].Trim();
+                string operation = parts[1].Trim();
+                string value = parts[2].Trim();
+                builder = new PhotoPropertyFilter(builder, property, operation, value).Apply();
+            }
 
             return Task.FromResult(
                 builder
