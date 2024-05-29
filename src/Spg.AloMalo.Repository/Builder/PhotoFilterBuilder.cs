@@ -30,6 +30,64 @@ namespace Spg.AloMalo.Repository.Builder
             }
             return query;
         }
+
+        public IPhotoFilterBuilder ApplyWidthGreaterThanFilter(int start)
+        {
+            EntityList = EntityList.Where(x => x.Width > start);
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyWidthGreaterThanEqualFilter(int start)
+        {
+            EntityList = EntityList.Where(x => x.Width >= start);
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyWidthLowerThanFilter(int start)
+        {
+            EntityList = EntityList.Where(x => x.Width < start);
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyWidthLowerThanEqualFilter(int start)
+        {
+            EntityList = EntityList.Where(x => x.Width <= start);
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyNameContainsFilter(string namePart)
+        {
+            EntityList = EntityList.Where(x => x.Name.Trim().ToLower()
+                            .Contains(namePart.Trim().ToLower()));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyDescriptionContainsFilter(string namePart)
+        {
+            EntityList = EntityList.Where(x => x.Description.Trim().ToLower()
+                            .Contains(namePart.Trim().ToLower()));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyNameStartsWithFilter(string namePart)
+        {
+            EntityList = EntityList.Where(x => x.Name.Trim().ToLower()
+                .StartsWith(namePart.Trim().ToLower()));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyDescriptionStartsWithFilter(string namePart)
+        {
+            EntityList = EntityList.Where(x => x.Description.Trim().ToLower()
+                .StartsWith(namePart.Trim().ToLower()));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyCreationTimeStampBetweenFilter(DateTime start, DateTime end)
+        {
+            EntityList = EntityList.Where(x => x.CreationTimeStamp > start && x.CreationTimeStamp < end);
+            return this;
+        }
     }
 
 }

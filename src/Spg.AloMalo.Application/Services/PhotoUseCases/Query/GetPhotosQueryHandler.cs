@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Spg.AloMalo.Application.Services.PhotoUseCases.Filters;
+using Spg.AloMalo.Application.Services.PhotoUseCases.Operations;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
-using Spg.AloMalo.DomainModel.Model;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class GetPhotosQueryHandler : IRequestHandler<GetPhotosQueryModel, List<PhotoDto>>
+    public class GetPhotosQueryHandler : IRequestHandler<GetPhotosQueryModel, IQueryable<PhotoDto>>
     {
         private readonly IReadOnlyPhotoRepository _photoRepository;
 
@@ -15,55 +15,32 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             _photoRepository = photoRepository;
         }
 
-        public Task<List<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
+        public Task<IQueryable<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
         {
-            IPhotoFilterBuilder builder = _photoRepository.FilterBuilder;
+            IPhotoFilterBuilder builder =
+               _photoRepository
+               .FilterBuilder;
 
-            var filters = request.Query.Filter.Split(';');
-            foreach (var filter in filters)
+            List<IQueryParameter> operations =
+            [
+                new FilterContainsOperations(builder),
+                new FilterStartsWithOperations(builder),
+                new FilterGreaterThanOperations(builder),
+                new FilterGreaterThanEqualOperations(builder),
+                new FilterLowerThanOperations(builder),
+                new FilterLowerThanEqualOperations(builder),
+                new FilterBetweenOperations(builder),
+            ];
+            foreach (IQueryParameter operation in operations)
             {
-                var parts = filter.Split(' ');
-                if (parts.Length == 3)
-                {
-                    var property = parts[0];
-                    var operation = parts[1];
-                    var value = parts[2];
-
-                    switch (property.ToLower())
-                    {
-                        case "name":
-                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Name, operation, value).Compile(filter);
-                            break;
-                        case "description":
-                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Description, operation, value).Compile(filter);
-                            break;
-                        case "location":
-                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Location, operation, value).Compile(filter);
-                            break;
-                        case "width":
-                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Width, operation, value).Compile(filter);
-                            break;
-                        case "height":
-                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Height, operation, value).Compile(filter);
-                            break;
-                        case "orientation":
-                            builder = new PropertyFilterParameter<Photo>(builder, p => p.Orientation, operation, value).Compile(filter);
-                            break;
-                        case "aigenerated":
-                            builder = new PropertyFilterParameter<Photo>(builder, p => p.AiGenerated, operation, value).Compile(filter);
-                            break;
-                        default:
-                            throw new InvalidOperationException("Unknown property");
-                    }
-                }
+                builder = operation.Compile(request?.Query?.Filter ?? string.Empty);
             }
 
-            return Task.FromResult(
-                builder
+            IQueryable<PhotoDto> result = builder
                 .Build()
-                .Select(p => p.ToDto())
-                .ToList()
-            );
+                .Select(r => r.ToDto());
+
+            return Task.FromResult(result);
         }
     }
 
