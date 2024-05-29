@@ -32,7 +32,6 @@ namespace Spg.AloMalo.Application.Services
             return null!;
         }
 
-
         public IQueryable<PhotoDto> GetPhotos()
         {
             IQueryable<PhotoDto> result = _readOnlyPhotoRepository

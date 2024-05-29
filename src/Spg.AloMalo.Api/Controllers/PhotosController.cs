@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Spg.AloMalo.Application;
 using Spg.AloMalo.DomainModel.Commands;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Exceptions;
@@ -46,10 +48,9 @@ namespace Spg.AloMalo.Api.Controllers
         // <---------URL---------><---PATH----><---------------QUERY(String)-----------------------
         //                        <-----------------------------URN--------------------------------
 
-
         private readonly IPhotoService _photoService;
 
-        public PhotosController(IPhotoService photoService)
+        public PhotosController(IPhotoService? photoService)
         {
             _photoService = photoService;
         }
