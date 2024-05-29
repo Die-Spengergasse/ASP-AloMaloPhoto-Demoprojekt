@@ -8,6 +8,12 @@
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Parameter\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Parameter\" />
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
