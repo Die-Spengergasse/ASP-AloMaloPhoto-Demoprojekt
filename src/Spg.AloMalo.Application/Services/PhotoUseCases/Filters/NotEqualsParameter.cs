@@ -4,11 +4,12 @@ using System;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class GreaterThanParameter<TProperty> : IQueryParameter where TProperty : IComparable<TProperty>
+    public class NotEqualsParameter<TProperty> : InterpretParameterBase<Photo>, IQueryParameter
     {
         private readonly IFilterBuilderBase<Photo, IPhotoFilterBuilder> _photoFilterBuilder;
 
-        public GreaterThanParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+        public NotEqualsParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+            : base("nq")
         {
             _photoFilterBuilder = photoFilterBuilder;
         }
@@ -16,11 +17,10 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
         public IPhotoFilterBuilder Compile(string queryParameter)
         {
             var (propertyExpression, operation, value) = QueryParameterParser.Parse<TProperty>(queryParameter);
-            if (operation.ToLower() == "gt")
-            {
-                var typedValue = (TProperty)Convert.ChangeType(value, typeof(TProperty));
-                return _photoFilterBuilder.GreaterThanFilter(propertyExpression, typedValue);
-            }
+
+            ForProperty(queryParameter, propertyExpression)
+                .Use<TProperty>((expr, val) => _photoFilterBuilder.NotEqualsFilter(expr, val));
+
             return (IPhotoFilterBuilder)_photoFilterBuilder;
         }
     }

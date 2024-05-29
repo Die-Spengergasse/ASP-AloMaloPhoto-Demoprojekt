@@ -4,11 +4,12 @@ using System;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class DateRangeParameter : IQueryParameter
+    public class DateRangeParameter : InterpretParameterBase<Photo>, IQueryParameter
     {
         private readonly IFilterBuilderBase<Photo, IPhotoFilterBuilder> _photoFilterBuilder;
 
         public DateRangeParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+            : base("dr")
         {
             _photoFilterBuilder = photoFilterBuilder;
         }
@@ -16,18 +17,11 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
         public IPhotoFilterBuilder Compile(string queryParameter)
         {
             var (propertyExpression, operation, value) = QueryParameterParser.Parse<DateTime>(queryParameter);
-            if (operation.ToLower() == "daterange")
-            {
-                var values = value.Split(',');
-                if (values.Length != 2)
-                {
-                    throw new ArgumentException("DateRange operation requires two values.");
-                }
+            var values = value.Split(' ').Select(DateTime.Parse).ToArray();
 
-                var startDate = DateTime.Parse(values[0]);
-                var endDate = DateTime.Parse(values[1]);
-                return _photoFilterBuilder.DateRangeFilter(propertyExpression, startDate, endDate);
-            }
+            ForProperty(queryParameter, propertyExpression)
+                .Use<DateTime, DateTime>((expr, start, end) => _photoFilterBuilder.DateRangeFilter(expr, start, end));
+
             return (IPhotoFilterBuilder)_photoFilterBuilder;
         }
     }

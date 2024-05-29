@@ -4,11 +4,12 @@ using System;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class RegexParameter : IQueryParameter
+    public class RegexParameter : InterpretParameterBase<Photo>, IQueryParameter
     {
         private readonly IFilterBuilderBase<Photo, IPhotoFilterBuilder> _photoFilterBuilder;
 
         public RegexParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+            : base("rx")
         {
             _photoFilterBuilder = photoFilterBuilder;
         }
@@ -16,10 +17,10 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
         public IPhotoFilterBuilder Compile(string queryParameter)
         {
             var (propertyExpression, operation, value) = QueryParameterParser.Parse<string>(queryParameter);
-            if (operation.ToLower() == "regex")
-            {
-                return _photoFilterBuilder.RegexFilter(propertyExpression, value);
-            }
+
+            ForProperty(queryParameter, propertyExpression)
+                .Use<string>((expr, val) => _photoFilterBuilder.RegexFilter(expr, val));
+
             return (IPhotoFilterBuilder)_photoFilterBuilder;
         }
     }

@@ -1,16 +1,15 @@
 ﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class NotInParameter<TProperty> : IQueryParameter
+    public class LessThanParameter<TProperty> : InterpretParameterBase<Photo>, IQueryParameter where TProperty : IComparable<TProperty>
     {
         private readonly IFilterBuilderBase<Photo, IPhotoFilterBuilder> _photoFilterBuilder;
 
-        public NotInParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+        public LessThanParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+            : base("lt")
         {
             _photoFilterBuilder = photoFilterBuilder;
         }
@@ -18,11 +17,10 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
         public IPhotoFilterBuilder Compile(string queryParameter)
         {
             var (propertyExpression, operation, value) = QueryParameterParser.Parse<TProperty>(queryParameter);
-            if (operation.ToLower() == "nin")
-            {
-                var values = value.Split(',').Select(v => (TProperty)Convert.ChangeType(v, typeof(TProperty)));
-                return _photoFilterBuilder.NotInFilter(propertyExpression, values);
-            }
+
+            ForProperty(queryParameter, propertyExpression)
+                .Use<TProperty>((expr, val) => _photoFilterBuilder.LessThanFilter(expr, val));
+
             return (IPhotoFilterBuilder)_photoFilterBuilder;
         }
     }

@@ -4,11 +4,12 @@ using System;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class EndsWithParameter : IQueryParameter
+    public class ContainsDigitsParameter : InterpretParameterBase<Photo>, IQueryParameter
     {
         private readonly IFilterBuilderBase<Photo, IPhotoFilterBuilder> _photoFilterBuilder;
 
-        public EndsWithParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+        public ContainsDigitsParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+            : base("cd")
         {
             _photoFilterBuilder = photoFilterBuilder;
         }
@@ -16,10 +17,10 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
         public IPhotoFilterBuilder Compile(string queryParameter)
         {
             var (propertyExpression, operation, value) = QueryParameterParser.Parse<string>(queryParameter);
-            if (operation.ToLower() == "ew")
-            {
-                return _photoFilterBuilder.EndsWithFilter(propertyExpression, value);
-            }
+
+            ForProperty(queryParameter, propertyExpression)
+                .Use<string>((expr, val) => _photoFilterBuilder.ContainsDigitsFilter(expr));
+
             return (IPhotoFilterBuilder)_photoFilterBuilder;
         }
     }

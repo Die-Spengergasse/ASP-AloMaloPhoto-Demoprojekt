@@ -4,11 +4,12 @@ using System;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class ContainsParameter : IQueryParameter
+    public class StartsWithParameter : InterpretParameterBase<Photo>, IQueryParameter
     {
         private readonly IFilterBuilderBase<Photo, IPhotoFilterBuilder> _photoFilterBuilder;
 
-        public ContainsParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+        public StartsWithParameter(IFilterBuilderBase<Photo, IPhotoFilterBuilder> photoFilterBuilder)
+            : base("sw")
         {
             _photoFilterBuilder = photoFilterBuilder;
         }
@@ -16,10 +17,10 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
         public IPhotoFilterBuilder Compile(string queryParameter)
         {
             var (propertyExpression, operation, value) = QueryParameterParser.Parse<string>(queryParameter);
-            if (operation.ToLower() == "ct")
-            {
-                return _photoFilterBuilder.ContainsFilter(propertyExpression, value);
-            }
+
+            ForProperty(queryParameter, propertyExpression)
+                .Use<string>((expr, val) => _photoFilterBuilder.StartsWithFilter(expr, val));
+
             return (IPhotoFilterBuilder)_photoFilterBuilder;
         }
     }
