@@ -47,5 +47,20 @@ namespace Spg.AloMalo.Repository.Builder
             EntityList = EntityList.Where(x => x.AiGenerated == @is);
             return this;
         }
+
+        public IPhotoFilterBuilder ApplyDescriptionContainsFilter(string filter) {
+            EntityList = EntityList.Where(x => x.Description.Contains(filter));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyDescriptionBeginsWithFilter(string filter) {
+            EntityList = EntityList.Where(x => x.Description.StartsWith(filter));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyDescriptionEndsWithFilter(string filter) {
+            EntityList = EntityList.Where(x => x.Description.EndsWith(filter));
+            return this;
+        }
     }
 }
