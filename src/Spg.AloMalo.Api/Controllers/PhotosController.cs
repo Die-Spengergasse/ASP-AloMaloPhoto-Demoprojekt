@@ -5,6 +5,9 @@ using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Interfaces;
 using System.Net.Http.Headers;
 
+using Spg.AloMalo.DomainModel.Queries;
+using Spg.AloMalo.Application.Services.PhotoUseCases.Query;
+
 namespace Spg.AloMalo.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -136,6 +139,14 @@ namespace Spg.AloMalo.Api.Controllers
         {
             //_photoService.Delete(null!); // TODO: Implementation
             return Ok();
+        }
+
+        //*[HttpGet()]
+        public IActionResult Get([FromQuery()] GetPhotosQueryHandler query)
+        {
+            List<PhotoDto> data = _photoService
+                .Send(new GetPhotosQueryModel(query))
+                .Result.ToList();
         }
     }
 }
