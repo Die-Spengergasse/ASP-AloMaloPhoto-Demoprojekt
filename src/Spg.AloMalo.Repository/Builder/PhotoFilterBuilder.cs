@@ -47,5 +47,53 @@ namespace Spg.AloMalo.Repository.Builder
             EntityList = EntityList.Where(x => x.AiGenerated == @is);
             return this;
         }
+        public IPhotoFilterBuilder ApplyDescriptionBeginsWithFilter(string filter)
+        {
+            EntityList = EntityList.Where(x => x.Description.StartsWith(filter));
+            return this;
+        }
+        public IPhotoFilterBuilder ApplyDescriptionContainsFilter(string filter)
+        {
+            EntityList = EntityList.Where(x => x.Description.Contains(filter));
+            return this;
+        }
+        public IPhotoFilterBuilder ApplyDescriptionEndsWithFilter(string filter)
+        {
+            EntityList = EntityList.Where(x => x.Description.EndsWith(filter));
+            return this;
+        }
+        public IPhotoFilterBuilder ApplyDescriptionEqualsFilter(string description)
+        {
+            EntityList = EntityList.Where(x => x.Description == description);
+            return this;
+        }
+        public IPhotoFilterBuilder ApplyNameEqualsFilter(string name)
+        {
+            EntityList = EntityList.Where(x => x.Name == name);
+            return this;
+        }
+        public IPhotoFilterBuilder ApplyHeightGreaterThanFilter(string filter)
+        {
+
+            EntityList = EntityList.Where(x => x.Height > int.Parse(filter));
+            return this;
+        }
+        public IPhotoFilterBuilder ApplyHeightLowerThanFilter(string filter)
+        {
+
+            EntityList = EntityList.Where(x => x.Height < int.Parse(filter));
+            return this;
+        }
+        public IPhotoFilterBuilder ApplyHeightEqualsFilter(string filter)
+        {
+            EntityList = EntityList.Where(x => x.Height == int.Parse(filter));
+            return this;
+        }
+        public IPhotoFilterBuilder ApplyHeightPlusMinus100Filter(string filter)
+        {
+            EntityList = EntityList.Where(x => x.Height < int.Parse(filter)+100 && x.Height > int.Parse(filter)-100);
+            return this;
+        }
+
     }
 }
