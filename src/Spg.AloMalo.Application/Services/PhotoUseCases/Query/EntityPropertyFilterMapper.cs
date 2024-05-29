@@ -9,7 +9,7 @@
         }
 
         public void ExecuteDeligateIfValid(string propertyName, TProperty propertyValue) {
-            if (propertyName == _shouldPropertyName) {
+            if (propertyName.ToLower() == _shouldPropertyName.ToLower()) {
                 _logic.Invoke(propertyValue);
             }
         }

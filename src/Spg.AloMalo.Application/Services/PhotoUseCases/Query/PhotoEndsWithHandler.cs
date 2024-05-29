@@ -11,7 +11,7 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query {
         public IPhotoFilterBuilder WithQuery(string query) {
             string[] queryParts = query.Split(' ');
 
-            if (queryParts[1] != "bw") {
+            if (queryParts[1] != "ew") {
                 return _builder;
             }
 
