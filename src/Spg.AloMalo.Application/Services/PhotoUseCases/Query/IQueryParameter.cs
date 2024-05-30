@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public interface IQueryParameter
+    public interface IQueryParameter<T>
     {
-        IPhotoFilterBuilder Compile(string queryParameter);
+        bool Matches(T item);
     }
 }
