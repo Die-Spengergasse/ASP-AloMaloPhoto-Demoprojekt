@@ -8,6 +8,7 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
     {
         private readonly IReadOnlyPhotoRepository _photoRepository;
 
+
         public GetPhotosQueryHandler(IReadOnlyPhotoRepository photoRepository)
         {
             _photoRepository = photoRepository;
@@ -19,13 +20,15 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
                 _photoRepository
                 .FilterBuilder;
 
-            builder = new LastNameContainsParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameBeginsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            builder = new LastNameEndsWithParameter(builder)
-                .Compile(request.Query.Filter);
-            // builder = new ...
+            string filter = request.Query.Filter;
+            string[] parts = filter.Split(' ');
+
+            if (parts.Length == 3)
+            {
+                string property = parts[0].Trim();
+                string operation = parts[1].Trim();
+                string value = parts[2].Trim();
+            }
 
             return Task.FromResult(
                 builder
