@@ -7,6 +7,8 @@ namespace Spg.AloMalo.Repository.Builder
     {
         public IQueryable<Photo> EntityList { get; set; }
 
+        private readonly List<Func<Photo, bool>> _conditions = new List<Func<Photo, bool>>();
+
         public PhotoFilterBuilder(IQueryable<Photo> photos)
         {
             EntityList = photos;
@@ -17,31 +19,84 @@ namespace Spg.AloMalo.Repository.Builder
             return EntityList;
         }
 
-        public IPhotoFilterBuilder ApplyIdFilter(PhotoId id)
+        public IPhotoFilterBuilder ApplyEqualsFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.Id == id);
+            _conditions.Add(photo => GetPropertyValue(photo, propertyName).Equals(value, StringComparison.OrdinalIgnoreCase));
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameContainsFilter(string name)
+
+        public IPhotoFilterBuilder ApplyContainsFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.Name.Contains(name));
+            _conditions.Add(photo => GetPropertyValue(photo, propertyName).Contains(value, StringComparison.OrdinalIgnoreCase));
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameBeginsWithFilter(string name)
+
+        public IPhotoFilterBuilder ApplyStartsWithFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.Name.StartsWith(name));
+            _conditions.Add(photo => GetPropertyValue(photo, propertyName).StartsWith(value, StringComparison.OrdinalIgnoreCase));
             return this;
         }
-        public IPhotoFilterBuilder ApplyNameEndsWithFilter(string name)
+
+        public IPhotoFilterBuilder ApplyEndsWithFilter(string propertyName, string value)
         {
-            EntityList = EntityList.Where(x => x.Name.EndsWith(name));
+            _conditions.Add(photo => GetPropertyValue(photo, propertyName).EndsWith(value, StringComparison.OrdinalIgnoreCase));
             return this;
         }
-        public IPhotoFilterBuilder ApplyOrientationFilter(Orientations orientation)
+
+        public IPhotoFilterBuilder ApplyContainsDigitsFilter(string propertyName)
         {
-            EntityList = EntityList.Where(x => x.Orientation == orientation);
+            _conditions.Add(photo => GetPropertyValue(photo, propertyName).Any(char.IsDigit));
             return this;
         }
+
+        public IPhotoFilterBuilder ApplyGreaterThanFilter(string propertyName, string value)
+        {
+            if (decimal.TryParse(value, out var decimalValue))
+            {
+                _conditions.Add(photo => decimal.TryParse(GetPropertyValue(photo, propertyName), out var propValue) && propValue > decimalValue);
+            }
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyGreaterThanOrEqualFilter(string propertyName, string value)
+        {
+            if (decimal.TryParse(value, out var decimalValue))
+            {
+                _conditions.Add(photo => decimal.TryParse(GetPropertyValue(photo, propertyName), out var propValue) && propValue >= decimalValue);
+            }
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyLessThanFilter(string propertyName, string value)
+        {
+            if (decimal.TryParse(value, out var decimalValue))
+            {
+                _conditions.Add(photo => decimal.TryParse(GetPropertyValue(photo, propertyName), out var propValue) && propValue < decimalValue);
+            }
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyLessThanOrEqualFilter(string propertyName, string value)
+        {
+            if (decimal.TryParse(value, out var decimalValue))
+            {
+                _conditions.Add(photo => decimal.TryParse(GetPropertyValue(photo, propertyName), out var propValue) && propValue <= decimalValue);
+            }
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyContainsSpecialCharsFilter(string propertyName)
+        {
+            _conditions.Add(photo => GetPropertyValue(photo, propertyName).Any(ch => !char.IsLetterOrDigit(ch)));
+            return this;
+        }
+
+        private string GetPropertyValue(Photo photo, string propertyName)
+        {
+            var property = typeof(Photo).GetProperty(propertyName);
+            return property?.GetValue(photo)?.ToString() ?? string.Empty;
+        }
+
         public IPhotoFilterBuilder ApplyAiFilter(bool @is)
         {
             EntityList = EntityList.Where(x => x.AiGenerated == @is);
