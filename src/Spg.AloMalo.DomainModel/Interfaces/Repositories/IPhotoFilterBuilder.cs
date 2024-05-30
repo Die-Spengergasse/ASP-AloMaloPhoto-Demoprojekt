@@ -10,6 +10,9 @@ namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
         IPhotoFilterBuilder ApplyNameEndsWithFilter(string filter);
         IPhotoFilterBuilder ApplyOrientationFilter(Orientations orientation);
         IPhotoFilterBuilder ApplyAiFilter(bool @is);
+        IPhotoFilterBuilder ApplyDescriptionContainsFilter(string filter);
+        IPhotoFilterBuilder ApplyDescriptionBeginsWithFilter(string filter);
+        IPhotoFilterBuilder ApplyDescriptionEndsWithFilter(string filter);
         //IPhotoFilterBuilder ApplyPaging(int page, int size);
     }
 }
