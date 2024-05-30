@@ -42,9 +42,21 @@ namespace Spg.AloMalo.Repository.Builder
             return this;
         }
 
+        public IPhotoFilterBuilder ApplyHeightEqualFilter(int height)
+        {
+            EntityList = EntityList.Where(x => x.Height == height);
+            return this;
+        }
+
         public IPhotoFilterBuilder ApplyNameContainsFilter(string part)
         {
             EntityList = EntityList.Where(x => x.Name.Trim().ToLower().Contains(part.Trim().ToLower()));
+            return this;
+        }
+
+        public IPhotoFilterBuilder ApplyNameEqualsFilter(string part)
+        {
+            EntityList = EntityList.Where(x => x.Name.Trim().ToLower().Equals(part.Trim().ToLower()));
             return this;
         }
 
@@ -53,6 +65,13 @@ namespace Spg.AloMalo.Repository.Builder
             EntityList = EntityList.Where(x => x.Name.Trim().ToLower().StartsWith(part.Trim().ToLower()));
             return this;
         }
+
+        public IPhotoFilterBuilder ApplyNameEndsWithFilter(string part)
+        {
+            EntityList = EntityList.Where(x => x.Name.Trim().ToLower().EndsWith(part.Trim().ToLower()));
+            return this;
+        }
+        
 
         public IPhotoFilterBuilder ApplyFilter(IFilter<Photo> filter)
         {

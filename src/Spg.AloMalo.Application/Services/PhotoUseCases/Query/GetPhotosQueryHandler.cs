@@ -1,41 +1,45 @@
 ﻿using MediatR;
+using Spg.AloMalo.Application.Services.PhotoUseCases.Operations;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class GetPhotosQueryHandler : IRequestHandler<GetPhotosQueryModel, List<PhotoDto>>
+    public class GetPhotosQueryHandler : IRequestHandler<GetPhotosQueryModel, IQueryable<PhotoDto>>
     {
         private readonly IReadOnlyPhotoRepository _photoRepository;
-
 
         public GetPhotosQueryHandler(IReadOnlyPhotoRepository photoRepository)
         {
             _photoRepository = photoRepository;
         }
 
-        public Task<List<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
+        public Task<IQueryable<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
         {
             IPhotoFilterBuilder builder =
-                _photoRepository
-                .FilterBuilder;
+               _photoRepository
+               .FilterBuilder;
 
-            string filter = request.Query.Filter;
-            string[] parts = filter.Split(' ');
-
-            if (parts.Length == 3)
+            List<IQueryParameter> operations =
+            [
+                new StartsWithOperation(builder),
+                new ContainsOperation(builder),
+                new EqualsOperation(builder),
+                new GreaterThanOperation(builder),
+                new GreaterThanEqualOperation(builder),
+                new LowerThanOperation(builder),
+                new LowerThanEqualOperation(builder)
+            ];
+            foreach (IQueryParameter operation in operations)
             {
-                string property = parts[0].Trim();
-                string operation = parts[1].Trim();
-                string value = parts[2].Trim();
+                builder = operation.Compile(request?.Query?.Filter ?? string.Empty);
             }
 
-            return Task.FromResult(
-                builder
+            IQueryable<PhotoDto> result = builder
                 .Build()
-                .Select(p => p.ToDto())
-                .ToList()
-            );
+                .Select(r => r.ToDto());
+
+            return Task.FromResult(result);
         }
     }
 }

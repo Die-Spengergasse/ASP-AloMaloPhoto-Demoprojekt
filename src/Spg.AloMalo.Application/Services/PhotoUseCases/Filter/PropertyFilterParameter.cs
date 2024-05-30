@@ -41,10 +41,10 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Filter
 
             return operation switch
             {
-                "equals" => ApplyEqualsFilter(value),
-                "contains" => ApplyContainsFilter(value),
                 "startswith" => ApplyStartsWithFilter(value),
                 "endswith" => ApplyEndsWithFilter(value),
+                "equals" => ApplyEqualsFilter(value),
+                "contains" => ApplyContainsFilter(value),
                 _ => throw new InvalidOperationException("Unknown operation")
             };
         }

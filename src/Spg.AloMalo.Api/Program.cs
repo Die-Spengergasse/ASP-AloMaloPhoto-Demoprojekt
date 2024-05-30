@@ -117,7 +117,7 @@ builder.Services.AddMediatR(options =>
     options.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 });
 builder.Services.AddTransient<IRequestHandler<CreatePhotoCommandModel, CreatePhotoReponseDto>, CreatePhotoCommandHandler>();
-builder.Services.AddTransient<IRequestHandler<GetPhotosQueryModel, List<PhotoDto>>, GetPhotosQueryHandler>();
+builder.Services.AddTransient<IRequestHandler<GetPhotosQueryModel, IQueryable<PhotoDto>>, GetPhotosQueryHandler>();
 //
 // Build App
 var app = builder.Build();
