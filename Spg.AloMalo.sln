@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.MvcFrontEnd", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.AloMalo.MockMvc", "test\Spg.AloMalo.MockMvc\Spg.AloMalo.MockMvc.csproj", "{1A1F7E1B-7C23-420A-882A-83C62A13B4E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spg.General.IdentityProvider", "src\Spg.General.IdentityProvider\Spg.General.IdentityProvider.csproj", "{23C9758B-4390-411C-8E38-B376C3ACC2A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spg.General.IdentityProvider", "src\Spg.General.IdentityProvider\Spg.General.IdentityProvider.csproj", "{23C9758B-4390-411C-8E38-B376C3ACC2A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AloMalo.Application.Test", "AloMalo.Application.Test\AloMalo.Application.Test.csproj", "{79B9E3F5-47AE-44D6-8503-EAE3161A87BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{23C9758B-4390-411C-8E38-B376C3ACC2A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23C9758B-4390-411C-8E38-B376C3ACC2A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23C9758B-4390-411C-8E38-B376C3ACC2A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79B9E3F5-47AE-44D6-8503-EAE3161A87BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B9E3F5-47AE-44D6-8503-EAE3161A87BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B9E3F5-47AE-44D6-8503-EAE3161A87BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B9E3F5-47AE-44D6-8503-EAE3161A87BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
