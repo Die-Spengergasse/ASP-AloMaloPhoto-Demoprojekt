@@ -4,7 +4,7 @@ using Spg.AloMalo.DomainModel.Queries;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
-    public class GetPhotosQueryModel : IRequest<List<PhotoDto>>
+    public class GetPhotosQueryModel : IRequest<IQueryable<PhotoDto>>
     {
         public GetPhotosQuery Query { get; }
 
