@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Spg.AloMalo.DomainModel.Interfaces.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -44,6 +45,22 @@ namespace Spg.AloMalo.Application
             }
 
             return new ExpressionMapper<TEntity>(propInfo);
+        }
+
+        protected void ApplyFilter<TProperty>(
+            string? queryParameter,
+            Expression<Func<TEntity, TProperty>> propertyExpression,
+            Func<TProperty, IEntityFilterBuilder<TEntity>> applyFilter)
+        {
+            ForProperty(queryParameter, propertyExpression).Use(applyFilter);
+        }
+
+        protected void ApplyFilter<T1, T2>(
+            string? queryParameter,
+            Expression<Func<TEntity, T1>> propertyExpression,
+            Func<T1, T2, IEntityFilterBuilder<TEntity>> applyFilter)
+        {
+            ForProperty(queryParameter, propertyExpression).Use(applyFilter);
         }
     }
 }

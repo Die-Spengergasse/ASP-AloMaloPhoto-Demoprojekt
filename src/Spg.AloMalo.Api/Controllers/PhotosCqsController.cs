@@ -26,9 +26,10 @@ namespace Spg.AloMalo.Api.Controllers
         [HttpGet()]
         public IActionResult GetFiltered([FromQuery] GetPhotosQuery query)
         {
-            var result = _mediator.Send(
-                new GetPhotosQueryModel(query)
-            );
+            List<PhotoDto> result = _mediator
+                .Send(new GetPhotosQueryModel(query))
+                .Result
+                .ToList();
             return Ok(result);
         }
 

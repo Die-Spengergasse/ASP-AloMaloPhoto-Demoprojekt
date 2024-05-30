@@ -10,41 +10,27 @@ using System.Threading.Tasks;
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Operations
 {
 
-    public class GreaterThanOperation : ParameterBase<Photo>, IQueryParameter
+    public class GreaterThanOperation : PhotoOperationBase
     {
-        private readonly IPhotoFilterBuilder _photoFilterBuilder;
-
         public GreaterThanOperation(IPhotoFilterBuilder photoFilterBuilder)
-            : base("gt")
-        {
-            _photoFilterBuilder = photoFilterBuilder;
-        }
+            : base("gt", photoFilterBuilder) { }
 
-        public IPhotoFilterBuilder Compile(string? queryParameter)
+        public override IPhotoFilterBuilder Compile(string? queryParameter)
         {
-            ForProperty(queryParameter, p => p.Height)
-                .Use<int>(_photoFilterBuilder.ApplyHeightGreaterThanFilter);
-
-            return _photoFilterBuilder;
+            ApplyFilter(queryParameter, p => p.Height, PhotoFilterBuilder.ApplyHeightGreaterThanFilter);
+            return PhotoFilterBuilder;
         }
     }
 
-    public class GreaterThanEqualOperation : ParameterBase<Photo>, IQueryParameter
+    public class GreaterThanEqualOperation : PhotoOperationBase
     {
-        private readonly IPhotoFilterBuilder _photoFilterBuilder;
-
         public GreaterThanEqualOperation(IPhotoFilterBuilder photoFilterBuilder)
-            : base("gte")
-        {
-            _photoFilterBuilder = photoFilterBuilder;
-        }
+            : base("gte", photoFilterBuilder) { }
 
-        public IPhotoFilterBuilder Compile(string? queryParameter)
+        public override IPhotoFilterBuilder Compile(string? queryParameter)
         {
-            ForProperty(queryParameter, p => p.Height)
-                .Use<int>(_photoFilterBuilder.ApplyHeightGreaterThanEqualFilter);
-
-            return _photoFilterBuilder;
+            ApplyFilter(queryParameter, p => p.Height, PhotoFilterBuilder.ApplyHeightGreaterThanEqualFilter);
+            return PhotoFilterBuilder;
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Spg.AloMalo.Application
             }
         }
 
-        public void Use<T1, T2>(Func<T1, T2, IEntityFilterBuilder<TEntity>>? action)
+        internal void Use<T1, T2>(Func<T1, T2, IEntityFilterBuilder<TEntity>>? action)
         {
             if (string.IsNullOrEmpty(_value1) || string.IsNullOrEmpty(_value2) || action == null) return;
 
@@ -49,6 +49,8 @@ namespace Spg.AloMalo.Application
                 action(target1, target2);
             }
         }
+
+        
     }
 
 

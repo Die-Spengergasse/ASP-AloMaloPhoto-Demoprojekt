@@ -9,25 +9,16 @@ using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Operations
 {
-    public class EqualsOperation : ParameterBase<Photo>, IQueryParameter
+    public class EqualsOperation : PhotoOperationBase
     {
-        private readonly IPhotoFilterBuilder _photoFilterBuilder;
-
         public EqualsOperation(IPhotoFilterBuilder photoFilterBuilder)
-            : base("eq")
+            : base("eq", photoFilterBuilder) { }
+
+        public override IPhotoFilterBuilder Compile(string? queryParameter)
         {
-            _photoFilterBuilder = photoFilterBuilder;
-        }
-
-        public IPhotoFilterBuilder Compile(string? queryParameter)
-        {
-            ForProperty(queryParameter, p => p.Name)
-                .Use<string>(_photoFilterBuilder.ApplyNameEqualsFilter);
-
-            ForProperty(queryParameter, p => p.Height)
-                .Use<int>(_photoFilterBuilder.ApplyHeightEqualFilter);
-
-            return _photoFilterBuilder;
+            ApplyFilter(queryParameter, p => p.Name, PhotoFilterBuilder.ApplyNameEqualsFilter);
+            ApplyFilter(queryParameter, p => p.Height, PhotoFilterBuilder.ApplyHeightEqualFilter);
+            return PhotoFilterBuilder;
         }
     }
 }
