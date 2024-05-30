@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Spg.AloMalo.Application.Services.Filter;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 
@@ -26,6 +27,9 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
             builder = new LastNameEndsWithParameter(builder)
                 .Compile(request.Query.Filter);
             // builder = new ...
+            builder = new PhotoBeginsWith(builder).WithQuery(request.Query.Filter);
+            builder = new PhotoContains(builder).WithQuery(request.Query.Filter);
+            builder = new PhotoEndsWith(builder).WithQuery(request.Query.Filter);
 
             return Task.FromResult(
                 builder
