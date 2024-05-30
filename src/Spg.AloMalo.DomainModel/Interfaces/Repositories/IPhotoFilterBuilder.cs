@@ -10,5 +10,9 @@ namespace Spg.AloMalo.DomainModel.Interfaces.Repositories
         IPhotoFilterBuilder ApplyHeightLowerThanEqualFilter(int height);
         IPhotoFilterBuilder ApplyNameContainsFilter(string part);
         IPhotoFilterBuilder ApplyNameStartsWithFilter(string part);
+
+        IPhotoFilterBuilder ApplyFilter(IFilter<Photo> filter);
+        IQueryable<Photo> Build();
+
     }
 }

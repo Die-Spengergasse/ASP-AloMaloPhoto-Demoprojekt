@@ -16,21 +16,7 @@ namespace Spg.AloMalo.Repository.Builder
             EntityList = photos;
         }
 
-        public IPhotoFilterBuilder ApplyFilter(IFilter<Photo> filter)
-        {
-            _filters.Add(filter);
-            return this;
-        }
-
-        public IQueryable<Photo> Build()
-        {
-            var query = EntityList;
-            foreach (var filter in _filters)
-            {
-                query = filter.Apply(query);
-            }
-            return query;
-        }
+        
 
         public IPhotoFilterBuilder ApplyHeightGreaterThanFilter(int height)
         {
@@ -66,6 +52,22 @@ namespace Spg.AloMalo.Repository.Builder
         {
             EntityList = EntityList.Where(x => x.Name.Trim().ToLower().StartsWith(part.Trim().ToLower()));
             return this;
+        }
+
+        public IPhotoFilterBuilder ApplyFilter(IFilter<Photo> filter)
+        {
+            _filters.Add(filter);
+            return this;
+        }
+
+        public IQueryable<Photo> Build()
+        {
+            var query = EntityList;
+            foreach (var filter in _filters)
+            {
+                query = filter.Apply(query);
+            }
+            return query;
         }
     }
 
