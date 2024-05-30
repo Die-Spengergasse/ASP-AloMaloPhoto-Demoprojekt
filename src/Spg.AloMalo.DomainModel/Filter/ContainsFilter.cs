@@ -19,19 +19,12 @@ public class ContainsFilter<T> : IFilter<T>
     {
         var parameter = Expression.Parameter(typeof(T), "x");
         var property = Expression.Property(parameter, _propertyName);
-
-        // Get the MethodInfo for string.Contains
-        var method = typeof(string).GetMethod("Contains", new[] { typeof(string) });
-
-        if (method == null)
-        {
-            throw new InvalidOperationException("Method 'string.Contains' not found.");
-        }
-
-        var someValue = Expression.Constant(_substring, typeof(string));
-        var containsMethodExp = Expression.Call(property, method, someValue);
-        var lambda = Expression.Lambda<Func<T, bool>>(containsMethodExp, parameter);
+        var constant = Expression.Constant(_substring);
+        var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+        var containsExpression = Expression.Call(property, containsMethod, constant);
+        var lambda = Expression.Lambda<Func<T, bool>>(containsExpression, parameter);
 
         return query.Where(lambda);
     }
 }
+

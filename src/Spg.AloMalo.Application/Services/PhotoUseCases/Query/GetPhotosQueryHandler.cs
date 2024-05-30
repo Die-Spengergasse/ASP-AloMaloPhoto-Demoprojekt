@@ -3,6 +3,12 @@ using Spg.AloMalo.Application.Services.PhotoUseCases.Filters;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
+using Spg.AloMalo.DomainModel.Queries;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 {
@@ -12,57 +18,76 @@ namespace Spg.AloMalo.Application.Services.PhotoUseCases.Query
 
         public GetPhotosQueryHandler(IReadOnlyPhotoRepository photoRepository)
         {
-            _photoRepository = photoRepository;
+            _photoRepository = photoRepository ?? throw new ArgumentNullException(nameof(photoRepository));
         }
 
-        public Task<List<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
+        public async Task<List<PhotoDto>> Handle(GetPhotosQueryModel request, CancellationToken cancellationToken)
         {
-            IPhotoFilterBuilder builder = _photoRepository.FilterBuilder;
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            if (request.Query == null) throw new ArgumentNullException(nameof(request.Query));
+
+            var builder = _photoRepository.FilterBuilder;
+            if (builder == null) throw new InvalidOperationException("FilterBuilder is not initialized.");
 
             var filters = request.Query.Filter.Split(';');
             foreach (var filter in filters)
             {
-                if (filter.StartsWith("contains:"))
+                var filterParts = filter.Split(' ');
+                if (filterParts.Length < 3) continue;
+
+                var property = filterParts[0];
+                var operation = filterParts[1];
+                var value = string.Join(' ', filterParts.Skip(2));
+
+                switch (operation.ToLower())
                 {
-                    var value = filter.Substring("contains:".Length);
-                    builder.ApplyFilter(new ContainsFilter<Photo>("Name", value));
-                }
-                else if (filter.StartsWith("equals:"))
-                {
-                    var value = filter.Substring("equals:".Length);
-                    builder.ApplyFilter(new EqualsFilter<Photo>("Name", value));
-                }
-                else if (filter.StartsWith("startswith:"))
-                {
-                    var value = filter.Substring("startswith:".Length);
-                    builder.ApplyFilter(new StartsWithFilter<Photo>("Name", value));
-                }
-                else if (filter.StartsWith("endswith:"))
-                {
-                    var value = filter.Substring("endswith:".Length);
-                    builder.ApplyFilter(new EndsWithFilter<Photo>("Name", value));
-                }
-                else if (filter.StartsWith("containsdigits"))
-                {
-                    builder.ApplyFilter(new ContainsDigitsFilter<Photo>("Name"));
-                }
-                else if (filter.StartsWith("greaterthan:"))
-                {
-                    var value = int.Parse(filter.Substring("greaterthan:".Length));
-                    builder.ApplyFilter(new GreaterThanFilter<Photo>("Year", value));
-                }
-                else if (filter.StartsWith("greaterthanequal:"))
-                {
-                    var value = int.Parse(filter.Substring("greaterthanequal:".Length));
-                    builder.ApplyFilter(new GreaterThanOrEqualFilter<Photo>("Year", value));
+                    case "equals":
+                        builder = builder.ApplyFilter(new EqualsFilter<Photo>(property, value));
+                        break;
+                    case "contains":
+                        builder = builder.ApplyFilter(new ContainsFilter<Photo>(property, value));
+                        break;
+                    case "startswith":
+                        builder = builder.ApplyFilter(new StartsWithFilter<Photo>(property, value));
+                        break;
+                    case "endswith":
+                        builder = builder.ApplyFilter(new EndsWithFilter<Photo>(property, value));
+                        break;
+                    case "greaterthan":
+                        if (int.TryParse(value, out int gtValue))
+                        {
+                            builder = builder.ApplyFilter(new GreaterThanFilter<Photo>(property, gtValue));
+                        }
+                        break;
+                    case "greaterthanequal":
+                        if (int.TryParse(value, out int gteValue))
+                        {
+                            builder = builder.ApplyFilter(new GreaterThanOrEqualFilter<Photo>(property, gteValue));
+                        }
+                        break;
+                    case "containsdigits":
+                        builder = builder.ApplyFilter(new ContainsDigitsFilter<Photo>(property));
+                        break;
                 }
             }
 
-            return Task.FromResult(
-                builder.Build()
-                       .Select(p => p.ToDto())
-                       .ToList()
-            );
+            var photos = builder.Build().ToList();
+
+            List<PhotoDto> result = builder
+              .Build()
+              .Select(r => r.ToDto())
+              .ToList();
+
+
+            return await Task.FromResult(result);
+        }
+
+        private Guid ConvertIntToGuid(int id)
+        {
+            // Erstellen eines neuen Guid basierend auf dem int-Wert
+            byte[] bytes = new byte[16];
+            BitConverter.GetBytes(id).CopyTo(bytes, 0);
+            return new Guid(bytes);
         }
     }
 }

@@ -4,9 +4,9 @@ using Spg.AloMalo.DomainModel.Interfaces;
 public class GreaterThanOrEqualFilter<T> : IFilter<T>
 {
     private readonly string _propertyName;
-    private readonly IComparable _value;
+    private readonly int _value;
 
-    public GreaterThanOrEqualFilter(string propertyName, IComparable value)
+    public GreaterThanOrEqualFilter(string propertyName, int value)
     {
         _propertyName = propertyName;
         _value = value;

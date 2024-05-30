@@ -1,9 +1,11 @@
-﻿using Spg.AloMalo.DomainModel.Commands;
+﻿using Spg.AloMalo.Application.Services.PhotoUseCases.Filters;
+using Spg.AloMalo.DomainModel.Commands;
 using Spg.AloMalo.DomainModel.Dtos;
 using Spg.AloMalo.DomainModel.Exceptions;
 using Spg.AloMalo.DomainModel.Interfaces;
 using Spg.AloMalo.DomainModel.Interfaces.Repositories;
 using Spg.AloMalo.DomainModel.Model;
+using System.Linq;
 
 namespace Spg.AloMalo.Application.Services
 {
@@ -37,16 +39,25 @@ namespace Spg.AloMalo.Application.Services
         {
             IQueryable<PhotoDto> result = _readOnlyPhotoRepository
                 .FilterBuilder
-                .ApplyNameContainsFilter("My")
+                .ApplyFilter(new ContainsFilter<Photo>("Name", "My"))
                 .Build()
-                    .Select(p => 
-                        new PhotoDto(
-                            p.Guid, 
-                            p.Name, 
-                            p.Description, 
-                            ImageTypesMapper.ToDto(p.ImageType), 
-                            OrientationsMapper.ToDto(p.Orientation)));
+                .Select(p => new PhotoDto(
+                    ConvertIntToGuid(p.Id.Value), // Konvertierung von int zu Guid
+                    p.Name,
+                    p.Description,
+                    ImageTypesMapper.ToDto(p.ImageType),
+                    OrientationsMapper.ToDto(p.Orientation)
+                ));
+
             return result;
+        }
+
+        private Guid ConvertIntToGuid(int id)
+        {
+            // Erstellen eines neuen Guid basierend auf dem int-Wert
+            byte[] bytes = new byte[16];
+            BitConverter.GetBytes(id).CopyTo(bytes, 0);
+            return new Guid(bytes);
         }
 
         public PhotoDto Create(CreatePhotoCommand command)
